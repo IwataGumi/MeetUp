@@ -25,3 +25,11 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+html,
+body,
+body > div:first-child,
+div#__next,
+div#__next > div {
+  min-height: 100%;
+}
