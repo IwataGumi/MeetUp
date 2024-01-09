@@ -1,14 +1,17 @@
-import Header from '@/components/Header'
 import '@/styles/globals.css'
+import { RecoilRoot } from 'recoil'
+import Header from '@/components/Header'
 import type { AppProps } from 'next/app'
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <div>
-      <Header />
-      <main className='pt-16 min-h-screen flex items-center justify-center'>
-        <Component {...pageProps} />
-      </main>
-    </div>
+    <RecoilRoot>
+      <div>
+        <Header />
+        <main className='h-full min-h-screen grid'>
+          <Component {...pageProps} />
+        </main>
+      </div>
+    </RecoilRoot>
   )
 }

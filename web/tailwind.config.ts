@@ -2,7 +2,7 @@ import type { Config } from 'tailwindcss'
 
 const config: Config = {
   daisyui: {
-    themes: ["business"],
+    themes: ["winter", "business"],
   },
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
