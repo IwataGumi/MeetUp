@@ -5,6 +5,8 @@ import Video from "./Video";
 import MicrophoneButton from "./Controlls/MicrophoneButton";
 import VideoButton from "./Controlls/VideoButton";
 import ConfigButton from "./Controlls/ConfigButton";
+import ConfigModal from "../Modal/ConfigModal";
+
 
 
 
@@ -14,6 +16,7 @@ interface Props {
 }
 
 const SelfCamera = ({width, height}: Props) => {
+  const configModalRef = useRef<HTMLDialogElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const devices = useRecoilValue(defaultDevices);
 
@@ -50,9 +53,13 @@ const SelfCamera = ({width, height}: Props) => {
           <VideoButton className="mx-1" />
         </div>
         <div className="absolute top-0 right-0 p-2">
-          <ConfigButton className="btn-neutral" />
+          <ConfigButton
+            className="btn-neutral"
+            onClick={() => configModalRef.current?.showModal()}
+          />
         </div>
       </div>
+      <ConfigModal ref={configModalRef} />
     </div>
   )
 }

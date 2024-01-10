@@ -3,7 +3,7 @@ import { IconType } from "react-icons";
 interface Props {
   className: string;
   Icon: IconType;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const BUTTON_CLASS = 'btn btn-circle w-[3.5rem] h-[3.5rem] min-h-[3.5rem]'

@@ -3,12 +3,10 @@ import { PiGearSixFill } from "react-icons/pi";
 
 interface Props {
   className: string;
+  onClick?: () => void;
 }
 
-const ConfigButton = ({ className }: Props) => {
-  const onClick = () => {
-  }
-
+const ConfigButton = ({ className, onClick }: Props) => {
   return (
     <Button
       Icon={PiGearSixFill}
