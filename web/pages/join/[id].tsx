@@ -1,14 +1,23 @@
+import { useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { userState } from '@/atoms/userState';
 import SelfCamera from '@/components/Camera/SelfCamera';
-import useDevices from '@/hooks/useDevices';
-import { PiMicrophoneSlashFill } from "react-icons/pi"
-
 
 const Join = () => {
-  const cameraDevices = useDevices('videoinput')
-  console.log(cameraDevices)
+  const [user, setUser] = useRecoilState(userState);
+  const [userName, setUserName] = useState(user.username || '');
+
+  const joinRoom = () => {
+    if (userName === '' || userName.length > 20) {
+      return setUser({...user, username: 'ゲスト'})
+    }
+
+    setUser({...user, username: userName})
+  }
+
   return (
     <div className='flex flex-col justify-center items-center'>
-      <div className='flex justify-evenly items-center w-full flex-wrap'>
+      <div className='flex justify-evenly items-center w-full flex-wrap p-2'>
         <SelfCamera />
         <div className='w-full max-w-sm'>
           <article className="prose">
@@ -19,12 +28,16 @@ const Join = () => {
               <span className="label-text">表示名</span>
             </div>
             <input
-              type="text"
+              value={userName}
+              onChange={(e) => {setUserName(e.target.value)}}
               placeholder="ゲスト"
               className="input input-bordered w-full"
             />
           </label>
-          <button className="btn w-full btn-neutral mt-4">
+          <button
+            onClick={joinRoom}
+            className="btn w-full btn-neutral mt-4"
+          >
             参加する
           </button>
         </div>
