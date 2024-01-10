@@ -41,7 +41,7 @@ const Join = () => {
           >
             参加する
           </button>
-          <div className='hover:text-accent hover:underline flex justify-center'>
+          <div className='hover:text-primary hover:underline flex justify-center'>
             <Link href="/" className='mt-6 text-xs'>
               参加せずに、トップページに戻る
             </Link>
