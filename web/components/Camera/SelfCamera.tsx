@@ -16,9 +16,8 @@ interface Props {
 const SelfCamera = ({width, height}: Props) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const devices = useRecoilValue(defaultDevices);
- 
+
   useEffect(() => {
-    console.log(devices, "recoil")
     if (videoRef) {
       navigator.mediaDevices
         .getUserMedia({
@@ -38,7 +37,7 @@ const SelfCamera = ({width, height}: Props) => {
   }, [devices, videoRef])
 
   return (
-    <div className="relative overflow-hidden m-2">
+    <div className="relative overflow-hidden">
       <Video
         ref={videoRef}
         width={width}
