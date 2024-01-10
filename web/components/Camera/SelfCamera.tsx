@@ -45,9 +45,9 @@ const SelfCamera = ({width, height}: Props) => {
         className="card z-[-1] object-cover aspect-video"
       />
       <div className="absolute top-0 left-0 w-full h-full">
-        <div className="absolute bottom-0 w-full flex m-2 items-center justify-center">
-          <MicrophoneButton className="mx-2 btn-neutral" />
-          <VideoButton className="mx-2" />
+        <div className="absolute bottom-0 w-full flex my-2 items-center justify-center">
+          <MicrophoneButton className="mx-1 btn-neutral" />
+          <VideoButton className="mx-1" />
         </div>
         <div className="absolute top-0 right-0 p-2">
           <ConfigButton className="btn-neutral" />

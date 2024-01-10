@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { userState } from '@/atoms/userState';
 import SelfCamera from '@/components/Camera/SelfCamera';
+import Link from 'next/link';
 
 const Join = () => {
   const [user, setUser] = useRecoilState(userState);
@@ -19,7 +20,7 @@ const Join = () => {
     <div className='flex flex-col justify-center items-center'>
       <div className='flex justify-evenly items-center w-full flex-wrap p-2'>
         <SelfCamera />
-        <div className='w-full max-w-sm'>
+        <div className='w-full max-w-sm my-6'>
           <article className="prose">
             <h2 className='p-2 text-center'>Are you READY?</h2>
           </article>
@@ -40,6 +41,11 @@ const Join = () => {
           >
             参加する
           </button>
+          <div className='hover:text-accent hover:underline flex justify-center'>
+            <Link href="/" className='mt-6 text-xs'>
+              参加せずに、トップページに戻る
+            </Link>
+          </div>
         </div>
       </div>
     </div>
