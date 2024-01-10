@@ -126,7 +126,7 @@ const ConfigModal = forwardRef<HTMLDialogElement, Props>(
             </div>
 
 
-            <div className="w-full mx-2 my-4">
+            <div className="w-full mx-2 my-4 md:mt-0">
               { renderContent()}
             </div>
           </div>
