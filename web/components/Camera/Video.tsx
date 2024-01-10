@@ -1,19 +1,21 @@
 import React from "react";
 
 interface Props {
-  size: {
-    width: number,
-    height: number,
-  }
+  width: number,
+  height: number,
+  className: string,
 }
 
-const Video = React.forwardRef<HTMLVideoElement, Props>(({ size }, ref) => {
+const Video = React.forwardRef<HTMLVideoElement, Props>(({ width, height, className }, ref) => {
     return (
-      <div>
+      <div className={`max-w-[${width}px] max-h-[${height}] w-full`}>
         <video
           ref={ref}
-          width={size.width}
-          height={size.height}
+          width="100%"
+          height="100%"
+          className={className}
+          autoPlay={true}
+          playsInline={true}
         />
       </div>
     )
@@ -21,5 +23,8 @@ const Video = React.forwardRef<HTMLVideoElement, Props>(({ size }, ref) => {
 );
 
 Video.displayName = 'Video';
+Video.defaultProps = {
+  className: ''
+}
 
 export default Video;
