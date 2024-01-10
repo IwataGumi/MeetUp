@@ -18,9 +18,9 @@ const Join = () => {
 
   return (
     <div className='flex flex-col justify-center items-center'>
-      <div className='flex justify-evenly items-center w-full flex-wrap p-2'>
+      <div className='flex justify-evenly items-center w-full max-w-[1400px] flex-wrap p-2'>
         <SelfCamera />
-        <div className='w-full max-w-sm my-6'>
+        <div className='w-full max-w-sm my-6 md:mx-4'>
           <article className="prose">
             <h2 className='p-2 text-center'>Are you READY?</h2>
           </article>
