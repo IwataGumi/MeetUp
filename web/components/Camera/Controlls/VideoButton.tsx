@@ -1,7 +1,10 @@
+import { localStreamState } from "@/atoms/streamState";
+import { videoControlsState } from "@/atoms/videoControlsState";
 import ToggleButton from "@/components/Button/ToggleButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PiVideoCameraFill } from "react-icons/pi";
 import { PiVideoCameraSlashFill } from "react-icons/pi";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 interface Props {
   defaultState: boolean;
@@ -9,20 +12,29 @@ interface Props {
 }
 
 const VideoButton = ({ className, defaultState }: Props) => {
-  const [isActive, setActive] = useState(defaultState);
+  const localStream = useRecoilValue(localStreamState);
+  const [videoControls, setVideoControls] = useRecoilState(videoControlsState)
 
-  const toggleActive = () => {
-    setActive(!isActive);
+  useEffect(() => {
+    localStream?.getVideoTracks().forEach(track => {
+      track.enabled = videoControls.camera
+    }, [localStream, videoControlsState])
+  })
+
+  if (!localStream) return;
+
+  const toggleHandler = () => {
+    setVideoControls({...videoControls, camera: !videoControls.camera})
   }
 
   return (
     <ToggleButton
-      state={isActive}
+      state={videoControls.camera}
       ActiveClassName="btn-neutral"
       ActiveIcon={PiVideoCameraFill}
       PassiveClassName="btn-error"
       PassiveIcon={PiVideoCameraSlashFill}
-      toggleFunction={toggleActive}
+      toggleFunction={toggleHandler}
       className={className}
     />
   )
