@@ -30,7 +30,7 @@ const SelfCamera = React.forwardRef<HTMLVideoElement, Props>(({ width, height },
         className="card z-[-1] object-cover aspect-video"
       />
       <div className="absolute top-0 left-0 w-full h-full">
-        <div className="absolute bottom-0 w-full flex my-2 items-center justify-center">
+        <div className="absolute bottom-0 w-full flex my-3 items-center justify-center">
           <MicrophoneButton className="mx-1 btn-neutral" />
           <VideoButton className="mx-1" />
         </div>
