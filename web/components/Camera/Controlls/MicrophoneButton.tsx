@@ -1,7 +1,7 @@
 import { localStreamState } from "@/atoms/streamState";
 import { videoControlsState } from "@/atoms/videoControlsState";
 import ToggleButton from "@/components/Button/ToggleButton";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { PiMicrophoneFill } from "react-icons/pi";
 import { PiMicrophoneSlashFill } from "react-icons/pi";
 import { useRecoilState, useRecoilValue } from "recoil";
