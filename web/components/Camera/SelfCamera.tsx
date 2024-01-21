@@ -1,3 +1,4 @@
+import React from "react";
 import { useRecoilValue } from "recoil";
 import { useEffect, useRef } from "react";
 import { defaultDevices } from "@/atoms/defaultDevices";
@@ -6,6 +7,7 @@ import MicrophoneButton from "./Controlls/MicrophoneButton";
 import VideoButton from "./Controlls/VideoButton";
 import ConfigButton from "./Controlls/ConfigButton";
 import ConfigModal from "../Modal/ConfigModal";
+import { userState } from "@/atoms/userState";
 
 
 
@@ -15,34 +17,14 @@ interface Props {
   height: number;
 }
 
-const SelfCamera = ({width, height}: Props) => {
+const SelfCamera = React.forwardRef<HTMLVideoElement, Props>(({ width, height }, ref) => {
   const configModalRef = useRef<HTMLDialogElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const devices = useRecoilValue(defaultDevices);
-
-  useEffect(() => {
-    if (videoRef) {
-      navigator.mediaDevices
-        .getUserMedia({
-          video: devices.camera,
-          audio: devices.microphone,
-        })
-        .then((stream) => {
-          if (videoRef?.current) {
-            videoRef.current.srcObject = stream;
-            videoRef.current.play();
-          }
-        })
-        .catch((e) => {
-          console.log(e)
-        })
-    }
-  }, [devices, videoRef])
 
   return (
     <div className="relative overflow-hidden">
       <Video
-        ref={videoRef}
+        ref={ref}
+        muted={true}
         width={width}
         height={height}
         className="card z-[-1] object-cover aspect-video"
@@ -62,8 +44,9 @@ const SelfCamera = ({width, height}: Props) => {
       <ConfigModal ref={configModalRef} />
     </div>
   )
-}
+});
 
+SelfCamera.displayName = 'SelfCamera';
 SelfCamera.defaultProps = {
   width: 740,
   height: 416,
