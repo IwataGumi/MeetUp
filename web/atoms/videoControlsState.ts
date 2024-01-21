@@ -8,8 +8,8 @@ type VideoControlsType = {
 }
 
 const defaultVideoControls: VideoControlsType = {
-  camera: false,
-  microphone: false,
+  camera: true,
+  microphone: true,
 }
 
 const getVideoControls = () => {
@@ -29,9 +29,9 @@ const saveItemToLocalStorage = (value: VideoControlsType) => {
   window.localStorage.setItem(LOCAL_STORAGE_NAME, JSON.stringify(value));
 }
 
-export const videoControlState = atom<VideoControlsType>({
+export const videoControlsState = atom<VideoControlsType>({
   key: 'videoControlState',
-  default: defaultVideoControls,
+  default: getVideoControls(),
   effects: [
     ({ onSet }) => {
       onSet((newValue) => {
