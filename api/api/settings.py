@@ -56,6 +56,10 @@ class Settings(BaseSettings):
     rabbit_pool_size: int = 2
     rabbit_channel_pool_size: int = 10
 
+    # token credentials
+    token_algorithm: str = "HS512"
+    token_secret_key: str = "app_some_secret_key"
+
     @property
     def db_url(self) -> URL:
         """

@@ -5,7 +5,7 @@ router = APIRouter()
 logger = logger.bind(Task="Rooms")
 
 
-@router.post('/new')
+@router.post('/')
 async def create_room():
     pass
 
@@ -13,14 +13,11 @@ async def create_room():
 async def create_user():
     pass
 
-@router.delete('/{room_uid}/users/')
-async def leave_user():
-    pass
+# TODO: socketio でやるかも？
+# @router.delete('/{room_uid}/users/')
+# async def leave_user():
+#     pass
 
 @router.get('/{room_uid}/users/')
 async def room_users():
     pass
-
-
-
-
