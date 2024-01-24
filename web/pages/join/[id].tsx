@@ -15,7 +15,7 @@ const Join = () => {
   const setOriginStream = useSetRecoilState(originalStreamState);
   const setLocalStream = useSetRecoilState(localStreamState);
   const setScreenStream = useSetRecoilState(screenStreamState);
-  
+
   const requestMediaStream = useCallback(async () => {
     if (!navigator.mediaDevices.getUserMedia || !videoRef.current) return;
 
@@ -75,8 +75,8 @@ const Join = () => {
           >
             参加する
           </button>
-          <div className='hover:text-primary hover:underline flex justify-center'>
-            <Link href="/" className='mt-6 text-xs'>
+          <div className='flex justify-center'>
+            <Link href="/" className='mt-6 text-xs hover:text-primary hover:underline'>
               参加せずに、トップページに戻る
             </Link>
           </div>
