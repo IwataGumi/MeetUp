@@ -26,6 +26,7 @@ aiofiles = "^23.1.0"
 httptools = "^0.6.0"
 aio-pika = "^9.1.4"
 loguru = "^0.7.0"
+python-socketio = "^5.11.0"
 
 
 [tool.poetry.dev-dependencies]
