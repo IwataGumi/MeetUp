@@ -1,5 +1,5 @@
 import { localStreamState } from "@/atoms/streamState";
-import { videoControlsState } from "@/atoms/videoControlsState";
+import { muteControlsState } from "@/atoms/muteControlsState";
 import ToggleButton from "@/components/Button/ToggleButton";
 import { useEffect, useState } from "react";
 import { PiVideoCameraFill } from "react-icons/pi";
@@ -13,12 +13,12 @@ interface Props {
 
 const VideoButton = ({ className, defaultState }: Props) => {
   const localStream = useRecoilValue(localStreamState);
-  const [videoControls, setVideoControls] = useRecoilState(videoControlsState)
+  const [videoControls, setVideoControls] = useRecoilState(muteControlsState)
 
   useEffect(() => {
     localStream?.getVideoTracks().forEach(track => {
       track.enabled = videoControls.camera
-    }, [localStream, videoControlsState])
+    }, [localStream, muteControlsState])
   })
 
   if (!localStream) return;

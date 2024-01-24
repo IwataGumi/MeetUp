@@ -1,7 +1,7 @@
 import { localStreamState } from "@/atoms/streamState";
-import { videoControlsState } from "@/atoms/videoControlsState";
+import { muteControlsState } from "@/atoms/muteControlsState";
 import ToggleButton from "@/components/Button/ToggleButton";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { PiMicrophoneFill } from "react-icons/pi";
 import { PiMicrophoneSlashFill } from "react-icons/pi";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -13,21 +13,23 @@ interface Props {
 
 const MicrophoneButton = ({ className, defaultState }: Props) => {
   const localStream = useRecoilValue(localStreamState);
-  const [videoControls, setVideoControls] = useRecoilState(videoControlsState)
+  const [muteControls, setMuteControls] = useRecoilState(muteControlsState)
 
   useEffect(() => {
     localStream?.getAudioTracks().forEach(track => {
-      track.enabled = videoControls.microphone;
+      track.enabled = muteControls.microphone;
     })
-  }, [localStream, videoControls])
+  }, [localStream, muteControls])
+
+  if (!localStream) return;
 
   const toggleHandler = () => {
-    setVideoControls({...videoControls, microphone: !videoControls.microphone})
+    setMuteControls({...muteControls, microphone: !muteControls.microphone})
   }
 
   return (
     <ToggleButton
-      state={videoControls.microphone}
+      state={muteControls.microphone}
       ActiveClassName="btn-neutral"
       ActiveIcon={PiMicrophoneFill}
       PassiveClassName="btn-error"

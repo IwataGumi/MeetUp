@@ -2,26 +2,26 @@ import { atom } from "recoil";
 
 const LOCAL_STORAGE_NAME = 'videoControls';
 
-type VideoControlsType = {
+type muteControlsType = {
   camera: boolean;
   microphone: boolean;
 }
 
-const defaultVideoControls: VideoControlsType = {
-  camera: true,
-  microphone: true,
+const defaultMuteControls: muteControlsType = {
+  camera: false,
+  microphone: false,
 }
 
 const getVideoControls = () => {
   if (typeof window === 'undefined') {
-    return defaultVideoControls;
+    return defaultMuteControls;
   }
 
   const controls = window.localStorage.getItem(LOCAL_STORAGE_NAME);
-  return controls ? JSON.parse(controls) as VideoControlsType : defaultVideoControls;
+  return controls ? JSON.parse(controls) as muteControlsType : defaultMuteControls;
 }
 
-const saveItemToLocalStorage = (value: VideoControlsType) => {
+const saveItemToLocalStorage = (value: muteControlsType) => {
   if (typeof window === 'undefined') {
     return;
   }
@@ -29,7 +29,7 @@ const saveItemToLocalStorage = (value: VideoControlsType) => {
   window.localStorage.setItem(LOCAL_STORAGE_NAME, JSON.stringify(value));
 }
 
-export const videoControlsState = atom<VideoControlsType>({
+export const muteControlsState = atom<muteControlsType>({
   key: 'videoControlState',
   default: getVideoControls(),
   effects: [
