@@ -1,13 +1,16 @@
-from fastapi import APIRouter
+from api.dependencies.auth import with_authenticate
+from fastapi import APIRouter, Depends
 from loguru import logger
 
 router = APIRouter()
 logger = logger.bind(Task="Rooms")
 
 
-@router.post('/')
-async def create_room():
-    pass
+@router.get('/')
+async def create_room(
+    user = Depends(with_authenticate)
+):
+    return user
 
 @router.post('/{room_uid}/users/')
 async def create_user():

@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Optional
+from typing import Optional
 from api.chemas.user import UserInfo
 
 from fastapi import Cookie, Depends, Header, HTTPException, status
@@ -11,7 +11,7 @@ from api.settings import settings
 async def with_authenticate(
     user_dao: UserDAO = Depends(),
     authorization: Optional[str] = Header(default=None),
-):
+) -> UserInfo:
     if authorization is None:
         HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
