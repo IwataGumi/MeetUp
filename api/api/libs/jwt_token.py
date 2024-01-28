@@ -6,7 +6,7 @@ from jose import ExpiredSignatureError, JWTError, jwt
 from api.settings import settings
 
 
-def create_token(
+def encode_token(
     data: Dict[str, Any],
     expires_delta: Optional[timedelta] = None,
 ) -> str:
@@ -34,7 +34,7 @@ def create_token(
     )
 
 
-def check_token(token: str) -> Optional[Dict[str, Any]]:
+def decode_token(token: str, raise_error: bool = False) -> Dict[str, Any] | None:
     """Check the validity of a JWT token.
 
     This function decodes and verifies the provided JWT token
@@ -48,7 +48,9 @@ def check_token(token: str) -> Optional[Dict[str, Any]]:
             settings.token_secret_key,
             algorithms=[settings.token_algorithm],
         )
-    except (JWTError, ExpiredSignatureError):
+    except (JWTError, ExpiredSignatureError) as ExceptionError:
+        if raise_error:
+            raise ExceptionError
         return None
 
 

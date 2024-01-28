@@ -1,12 +1,15 @@
 import enum
 from pathlib import Path
 from tempfile import gettempdir
+from typing import Literal
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from yarl import URL
 
 TEMP_DIR = Path(gettempdir())
 
+
+EnvironmentType = Literal["dev", "prod"]
 
 class LogLevel(str, enum.Enum):  # noqa: WPS600
     """Possible log levels."""
@@ -26,16 +29,18 @@ class Settings(BaseSettings):
     These parameters can be configured
     with environment variables.
     """
-
+    domain: str = 'localhost'
     host: str = "127.0.0.1"
     port: int = 8000
+    web_uri: str = "http://localhost:3000/"
+
     # quantity of workers for uvicorn
     workers_count: int = 1
     # Enable uvicorn reloading
     reload: bool = False
 
     # Current environment
-    environment: str = "dev"
+    environment: EnvironmentType = "dev"
 
     log_level: LogLevel = LogLevel.INFO
     # Variables for the database
@@ -59,6 +64,11 @@ class Settings(BaseSettings):
     # token credentials
     token_algorithm: str = "HS512"
     token_secret_key: str = "app_some_secret_key"
+
+    @property
+    def is_production(self) -> bool:
+        return self.environment != 'dev'
+
 
     @property
     def db_url(self) -> URL:

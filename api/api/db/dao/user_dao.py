@@ -1,5 +1,7 @@
 import uuid
 from typing import Optional
+from api.static import static
+from api.libs.jwt_token import encode_token
 
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -24,7 +26,7 @@ class UserDAO:
 
         return user
 
-    async def get_user(self, user_uuid: uuid.UUID) -> Optional[UserModel]:
+    async def get_user(self, user_uuid: uuid.UUID) -> UserModel | None:
         """Get user from user's uuid.
 
         if not found from uuid, will return None.
@@ -34,3 +36,23 @@ class UserDAO:
         """
         user = await self.session.get(UserModel, user_uuid)
         return user
+
+    def generate_access_token(self, user_model: UserModel) -> str:
+        return encode_token(
+            data={
+                "token_type": "token",
+                "user_id": user_model.id,
+                "room_id": user_model.room_id,
+            },
+            expires_delta=static.ACCESS_TOKEN_EXPIRE_TIME,
+        )
+
+    def generate_refresh_token(self, user_model: UserModel) -> str:
+        return encode_token(
+            data={
+                "token_type": "refresh_token",
+                "user_id": user_model.id,
+                "room_id": user_model.room_id,
+            },
+            expires_delta=static.REFRESH_TOKEN_EXPIRE_TIME,
+        )
