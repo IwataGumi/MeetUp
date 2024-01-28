@@ -1,5 +1,6 @@
 import uuid
 from typing import Optional
+from api.db.models.room_model import RoomModel
 from api.static import static
 from api.libs.jwt_token import encode_token
 
@@ -16,13 +17,18 @@ class UserDAO:
     def __init__(self, session: AsyncSession = Depends(get_db_session)):
         self.session = session
 
-    async def create_user(self):
+    async def create_user(self, room: RoomModel, is_owner: bool = False):
         """Add new user to the datebase.
 
         :returns: if succeed to create user, will return UserModel object.
         """
-        user = UserModel()
-        await self.session.commit()
+        user = UserModel(
+            is_owner=is_owner,
+            room_id=room.id,
+        )
+        user.room = room
+        self.session.add(user)
+        await self.session.flush()
 
         return user
 
@@ -41,8 +47,8 @@ class UserDAO:
         return encode_token(
             data={
                 "token_type": "token",
-                "user_id": user_model.id,
-                "room_id": user_model.room_id,
+                "user_id": str(user_model.id),
+                "room_id": str(user_model.room.id),
             },
             expires_delta=static.ACCESS_TOKEN_EXPIRE_TIME,
         )
@@ -51,8 +57,8 @@ class UserDAO:
         return encode_token(
             data={
                 "token_type": "refresh_token",
-                "user_id": user_model.id,
-                "room_id": user_model.room_id,
+                "user_id": str(user_model.id),
+                "room_id": str(user_model.room.id),
             },
             expires_delta=static.REFRESH_TOKEN_EXPIRE_TIME,
         )
