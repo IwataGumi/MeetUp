@@ -14,10 +14,11 @@ import { originalStreamState, localStreamState, screenStreamState } from '@/atom
 interface Props {
   width: number;
   height: number;
-  withControlls?: boolean;
+  className: string;
+  withControlls: boolean;
 }
 
-const SelfCamera = ({ width, height, withControlls }: Props) => {
+const SelfCamera = ({ width, height, withControlls, className }: Props) => {
   const configModalRef = useRef<HTMLDialogElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -47,15 +48,13 @@ const SelfCamera = ({ width, height, withControlls }: Props) => {
     requestMediaStream();
   }, [requestMediaStream])
 
-
   return (
-    <div className="relative overflow-hidden">
+    <div style={{width: width, height: height}} className={`relative overflow-hidden ${className}`}>
       <Video
         ref={videoRef}
         muted={true}
-        width={width}
-        height={height}
-        className="card z-[-1] object-cover aspect-video"
+        className="card z-[-1] object-contain"
+        // object-cover aspect-video
       />
       { withControlls && (
         <>
@@ -79,8 +78,9 @@ const SelfCamera = ({ width, height, withControlls }: Props) => {
 };
 
 SelfCamera.defaultProps = {
-  width: 740,
-  height: 416,
+  width: 0,
+  height: 0,
+  className: '',
   withControlls: false,
 }
 
