@@ -48,7 +48,7 @@ class UserDAO:
             data={
                 "token_type": "token",
                 "user_id": str(user_model.id),
-                "room_id": str(user_model.room.id),
+                "room_id": str(user_model.room_id),
             },
             expires_delta=static.ACCESS_TOKEN_EXPIRE_TIME,
         )
@@ -58,7 +58,7 @@ class UserDAO:
             data={
                 "token_type": "refresh_token",
                 "user_id": str(user_model.id),
-                "room_id": str(user_model.room.id),
+                "room_id": str(user_model.room_id),
             },
             expires_delta=static.REFRESH_TOKEN_EXPIRE_TIME,
         )

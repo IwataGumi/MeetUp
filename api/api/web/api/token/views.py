@@ -14,24 +14,25 @@ logger = logger.bind(Task="Token")
 @router.post("/token/refresh")
 async def generate_token(
     token_dto: JWTRefreshToken,
-    cookie_refresh_token: str = Cookie(default=None),
+    refresh_token: str = Cookie(default=None),
     user_dao: UserDAO = Depends(),
 ) -> Response:
-    if cookie_refresh_token is None and token_dto.refresh_token is None:
+    print(refresh_token)
+    if refresh_token is None and token_dto.refresh_token is None:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Not found session_id in the request.",
+            detail="Not found refresh_token in the request. (Header and Cookie)",
         )
 
-    refresh_token = ''
+    token = ''
 
-    if cookie_refresh_token is not None:
-        refresh_token = cookie_refresh_token
+    if refresh_token is not None:
+        token = refresh_token
     elif token_dto.refresh_token is not None:
-        refresh_token = token_dto.refresh_token
+        token = token_dto.refresh_token
 
-    if jwt_token.is_valid(refresh_token):
-        user_info = jwt_token.decode_token(refresh_token)
+    if jwt_token.is_valid(token):
+        user_info = jwt_token.decode_token(token)
 
         if user_info is None:
             # NORMALY NO WAY!
@@ -45,7 +46,7 @@ async def generate_token(
                 detail="Internal Server Error."
             )
 
-        user = await user_dao.get_user(refresh_token.user_id)
+        user = await user_dao.get_user(user_info["user_id"])
 
         if user is None:
             error_message = [
@@ -69,3 +70,8 @@ async def generate_token(
             samesite="strict",
             httponly=True
         )
+
+        return response
+    raise HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED, detail="Expired refresh_token."
+    )
