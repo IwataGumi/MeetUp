@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 const Home = () => {
   const router = useRouter();
