@@ -1,5 +1,6 @@
 import SelfCamera from "@/components/Camera/SelfCamera";
 import { useEffect, useRef, useState } from "react";
+import { videoMinimumSize } from '@/utils/static';
 
 const Room = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -9,11 +10,6 @@ const Room = () => {
     width: 0,
     height: 0,
   });
-
-  const mixiumSize = {
-    width: 426,
-    height: 240,
-  }
 
   const itemPerRow = Math.ceil(Math.sqrt((users?.length ?? 0)));
   const row = Math.ceil(((users?.length ?? 0)) / itemPerRow);
@@ -25,26 +21,20 @@ const Room = () => {
       let itemWidth = element.clientWidth / itemPerRow - 16;
       let itemHeight = element.clientHeight / row - 16;
 
-      if (mixiumSize.width > itemWidth || mixiumSize.height > itemHeight) {
-        itemWidth = mixiumSize.width;
-        itemHeight = mixiumSize.height;
+      if (videoMinimumSize.width > itemWidth || videoMinimumSize.height > itemHeight) {
+        itemWidth = videoMinimumSize.width;
+        itemHeight = videoMinimumSize.height;
       }
 
       const scale = Math.min(itemWidth / 16, itemHeight / 9);
       setSize({ width: Math.ceil(scale * 16), height: Math.ceil(scale * 9) });
     });
-    console.log(element.clientWidth)
-    console.log(element.clientHeight)
 
     observer.observe(element);
     return () => {
       observer?.disconnect();
     };
-  }, [itemPerRow, mixiumSize, row, users]);
-
-  useEffect(() => {
-    console.log(size)
-  }, [size])
+  }, [itemPerRow, row, users]);
 
   return (
     <>

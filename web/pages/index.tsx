@@ -2,8 +2,8 @@ import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
 
 const Home = () => {
-  const router = useRouter()
-  const [roomId, setRoomId] = useState('')
+  const router = useRouter();
+  const [roomId, setRoomId] = useState('');
 
   const joinRoom = () => {
     router.push(`/join/${roomId}`)

@@ -5,3 +5,8 @@ export const videoConstraints = {
     height: 416,
   },
 }
+
+export const videoMinimumSize = {
+  width: 426,
+  height: 240,
+}

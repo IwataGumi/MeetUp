@@ -3,8 +3,10 @@ import { useRecoilState } from 'recoil';
 import { userState } from '@/atoms/userState';
 import SelfCamera from '@/components/Camera/SelfCamera';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const Join = () => {
+  const router = useRouter();
   const [user, setUser] = useRecoilState(userState);
   const [userName, setUserName] = useState(user.username || '');
 
@@ -14,6 +16,7 @@ const Join = () => {
     }
 
     setUser({...user, username: userName})
+    router.push(`/room/${router.query.id}`)
   }
 
   return (
