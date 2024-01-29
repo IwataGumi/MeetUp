@@ -12,10 +12,12 @@ const Join = () => {
 
   const joinRoom = () => {
     if (userName === '' || userName.length > 20) {
-      return setUser({...user, username: 'ゲスト'})
+      setUserName('ゲスト')
+      setUser({...user, username: 'ゲスト'})
+    } else {
+      setUser({...user, username: userName})
     }
 
-    setUser({...user, username: userName})
     router.push(`/room/${router.query.id}`)
   }
 

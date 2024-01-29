@@ -27,6 +27,12 @@ const SelfCamera = ({ width, height, withControlls, className }: Props) => {
   const setOriginStream = useSetRecoilState(originalStreamState);
   const setLocalStream = useSetRecoilState(localStreamState);
   const setScreenStream = useSetRecoilState(screenStreamState);
+  const videoStyle = {
+    width: '100%',
+    height: '100%',
+    maxWidth: width,
+    maxHeight: height,
+  }
 
   const requestMediaStream = useCallback(async () => {
     if (!navigator.mediaDevices.getUserMedia || !videoRef.current) return;
@@ -49,7 +55,7 @@ const SelfCamera = ({ width, height, withControlls, className }: Props) => {
   }, [requestMediaStream])
 
   return (
-    <div style={{width: width, height: height}} className={`relative overflow-hidden ${className}`}>
+    <div style={videoStyle} className={`relative overflow-hidden ${className}`}>
       <Video
         ref={videoRef}
         muted={true}
