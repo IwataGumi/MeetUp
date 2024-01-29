@@ -1,50 +1,20 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useState } from 'react';
+import { useRecoilState } from 'recoil';
 import { userState } from '@/atoms/userState';
-import { originalStreamState, localStreamState, screenStreamState } from '@/atoms/streamState';
-import { videoConstraints } from '@/utils/static';
 import SelfCamera from '@/components/Camera/SelfCamera';
 import Link from 'next/link';
 
 const Join = () => {
-  const videoRef = useRef<HTMLVideoElement>(null);
   const [user, setUser] = useRecoilState(userState);
   const [userName, setUserName] = useState(user.username || '');
-  // TODO: add message when camera and microphone was rejected.
-  const [isRejected, setIsRejected] = useState(false);
-  const setOriginStream = useSetRecoilState(originalStreamState);
-  const setLocalStream = useSetRecoilState(localStreamState);
-  const setScreenStream = useSetRecoilState(screenStreamState);
-
-  const requestMediaStream = useCallback(async () => {
-    if (!navigator.mediaDevices.getUserMedia || !videoRef.current) return;
-
-    try {
-      const mediaStream = await navigator.mediaDevices.getUserMedia(videoConstraints);
-      setOriginStream(mediaStream);
-      const stream = new MediaStream(mediaStream);
-      setLocalStream(stream);
-      const screenStream = new MediaStream(stream);
-      videoRef.current.srcObject = screenStream;
-      setScreenStream(screenStream);
-    } catch (e) {
-      setIsRejected(false);
-    }
-  }, [setLocalStream, setOriginStream, setScreenStream])
 
   const joinRoom = () => {
     if (userName === '' || userName.length > 20) {
       return setUser({...user, username: 'ゲスト'})
     }
 
-    requestMediaStream();
-
     setUser({...user, username: userName})
   }
-
-  useEffect(() => {
-    requestMediaStream();
-  }, [requestMediaStream])
 
   return (
     <div className='flex flex-col justify-center items-center'>
@@ -52,7 +22,7 @@ const Join = () => {
         <SelfCamera
           width={740}
           height={416}
-          ref={videoRef}
+          withControlls={true}
         />
         <div className='w-full max-w-sm my-6 md:mx-4'>
           <article className="prose">
