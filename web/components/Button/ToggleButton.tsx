@@ -1,28 +1,32 @@
 import { IconType } from "react-icons";
+import CircleIconButton from "./CircleIconButton";
+import { defaultButtonSize, defaultButtonSizeClass } from "@/utils/static";
 
 interface Props {
   state: boolean;
+  iconSize: number;
   className: string;
   ActiveClassName: string;
   ActiveIcon: IconType;
   PassiveClassName: string;
   PassiveIcon: IconType;
+  buttonSizeClassName: string;
   toggleFunction: () => void;
 }
 
-const BUTTON_CLASS = 'btn btn-circle w-[3.5rem] h-[3.5rem] min-h-[3.5rem]'
+const BUTTON_CLASS = 'btn btn-circle'
 
 const ToggleButton = ({
-  state, className, ActiveClassName, ActiveIcon, PassiveClassName, PassiveIcon, toggleFunction
+  state, iconSize, className, buttonSizeClassName, ActiveClassName, ActiveIcon, PassiveClassName, PassiveIcon, toggleFunction
 }: Props) => {
   if (state) {
     return (
-      <button
+      <CircleIconButton
         onClick={toggleFunction}
-        className={`${BUTTON_CLASS} ${className} ${ActiveClassName}`}
-      >
-        <ActiveIcon size={26} />
-      </button>
+        Icon={ActiveIcon}
+        iconSize={iconSize}
+        className={`${BUTTON_CLASS} ${buttonSizeClassName} ${className} ${ActiveClassName}`}
+      />
     )
   } else {
     return (
@@ -30,7 +34,7 @@ const ToggleButton = ({
         onClick={toggleFunction}
         className={`${BUTTON_CLASS} ${className} ${PassiveClassName}`}
       >
-        <PassiveIcon size={26} />
+        <PassiveIcon size={iconSize} />
       </button>
     )
   }
@@ -38,8 +42,10 @@ const ToggleButton = ({
 
 ToggleButton.defaultProps = {
   className: '',
+  iconSize: defaultButtonSize,
   ActiveClassName: '',
   PassiceClassName: '',
+  buttonSizeClassName: defaultButtonSizeClass,
 }
 
 export default ToggleButton;
