@@ -5,13 +5,15 @@ import { useEffect, useState } from "react";
 import { PiMicrophoneFill } from "react-icons/pi";
 import { PiMicrophoneSlashFill } from "react-icons/pi";
 import { useRecoilState, useRecoilValue } from "recoil";
+import { defaultButtonSize, defaultButtonSizeClass } from "@/utils/static";
 
 interface Props {
-  defaultState: boolean;
+  iconSize: number;
   className: string;
+  buttonSizeClassName: string;
 }
 
-const MicrophoneButton = ({ className, defaultState }: Props) => {
+const MicrophoneButton = ({ iconSize, className, buttonSizeClassName }: Props) => {
   const localStream = useRecoilValue(localStreamState);
   const [muteControls, setMuteControls] = useRecoilState(muteControlsState)
 
@@ -29,11 +31,13 @@ const MicrophoneButton = ({ className, defaultState }: Props) => {
 
   return (
     <ToggleButton
+      iconSize={iconSize}
       state={muteControls.microphone}
       ActiveClassName="btn-neutral"
       ActiveIcon={PiMicrophoneFill}
       PassiveClassName="btn-error"
       PassiveIcon={PiMicrophoneSlashFill}
+      buttonSizeClassName={buttonSizeClassName}
       toggleFunction={toggleHandler}
       className={className}
     />
@@ -41,8 +45,9 @@ const MicrophoneButton = ({ className, defaultState }: Props) => {
 }
 
 MicrophoneButton.defaultProps = {
-  defaultState: true,
-  className: ''
+  iconSize: defaultButtonSize,
+  className: '',
+  buttonSizeClassName: defaultButtonSizeClass,
 }
 
 export default MicrophoneButton;
