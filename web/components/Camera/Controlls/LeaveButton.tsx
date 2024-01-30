@@ -1,6 +1,6 @@
-import { PiGearSixFill } from "react-icons/pi";
+import { MdCallEnd } from "react-icons/md";
 import CircleIconButton from "@/components/Button/CircleIconButton";
-import { defaultButtonSize, defaultButtonSizeClass } from "@/utils/static";
+import { defaultButtonSizeClass } from "@/utils/static";
 
 interface Props {
   className: string;
@@ -9,22 +9,23 @@ interface Props {
   onClick?: () => void;
 }
 
-const ConfigButton = ({ className, buttonSizeClassName, iconSize, onClick }: Props) => {
+const BUTTON_CLASS = 'btn btn-error';
+
+const LeaveButton = ({className, buttonSizeClassName, iconSize, onClick}: Props) => {
   return (
     <CircleIconButton
-      Icon={PiGearSixFill}
+      Icon={MdCallEnd}
       iconSize={iconSize}
-      className={`btn-neutral ${className}`}
+      className={`${BUTTON_CLASS} ${className}`}
       buttonSizeClassName={buttonSizeClassName}
       onClick={onClick}
     />
   )
 }
 
-ConfigButton.defaultProps = {
+LeaveButton.defaultProps = {
   className: '',
-  iconSize: defaultButtonSize,
   buttonSizeClassName: defaultButtonSizeClass,
 }
 
-export default ConfigButton;
+export default LeaveButton;

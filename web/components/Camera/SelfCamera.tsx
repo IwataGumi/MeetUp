@@ -28,8 +28,6 @@ const SelfCamera = ({ width, height, withControlls, className }: Props) => {
   const setLocalStream = useSetRecoilState(localStreamState);
   const setScreenStream = useSetRecoilState(screenStreamState);
   const videoStyle = {
-    width: '100%',
-    height: '100%',
     maxWidth: width,
     maxHeight: height,
   }
@@ -59,7 +57,7 @@ const SelfCamera = ({ width, height, withControlls, className }: Props) => {
       <Video
         ref={videoRef}
         muted={true}
-        className="card z-[-1] object-contain"
+        className="card z-[-1] bg-base-200 object-contain"
         // object-cover aspect-video
       />
       { withControlls && (
@@ -73,7 +71,7 @@ const SelfCamera = ({ width, height, withControlls, className }: Props) => {
               <ConfigButton
                 className="btn-neutral"
                 onClick={() => configModalRef.current?.showModal()}
-                />
+              />
             </div>
           </div>
           <ConfigModal ref={configModalRef} />

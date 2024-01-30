@@ -5,13 +5,15 @@ import { useEffect, useState } from "react";
 import { PiVideoCameraFill } from "react-icons/pi";
 import { PiVideoCameraSlashFill } from "react-icons/pi";
 import { useRecoilState, useRecoilValue } from "recoil";
+import { defaultButtonSize, defaultButtonSizeClass } from "@/utils/static";
 
 interface Props {
-  defaultState: boolean;
+  iconSize: number;
   className: string;
+  buttonSizeClassName: string;
 }
 
-const VideoButton = ({ className, defaultState }: Props) => {
+const VideoButton = ({ iconSize, className, buttonSizeClassName }: Props) => {
   const localStream = useRecoilValue(localStreamState);
   const [videoControls, setVideoControls] = useRecoilState(muteControlsState)
 
@@ -29,11 +31,13 @@ const VideoButton = ({ className, defaultState }: Props) => {
 
   return (
     <ToggleButton
+      iconSize={iconSize}
       state={videoControls.camera}
       ActiveClassName="btn-neutral"
       ActiveIcon={PiVideoCameraFill}
       PassiveClassName="btn-error"
       PassiveIcon={PiVideoCameraSlashFill}
+      buttonSizeClassName={buttonSizeClassName}
       toggleFunction={toggleHandler}
       className={className}
     />
@@ -41,8 +45,9 @@ const VideoButton = ({ className, defaultState }: Props) => {
 }
 
 VideoButton.defaultProps = {
-  defaultState: true,
-  className: ''
+  iconSize: defaultButtonSize,
+  className: '',
+  buttonSizeClassName: defaultButtonSizeClass,
 }
 
 export default VideoButton;
