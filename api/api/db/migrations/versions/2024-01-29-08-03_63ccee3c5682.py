@@ -1,15 +1,15 @@
-"""Add room tables
+"""empty message
 
-Revision ID: 34ce244049db
+Revision ID: 63ccee3c5682
 Revises: 
-Create Date: 2024-01-29 01:38:57.729144
+Create Date: 2024-01-29 08:03:32.262861
 
 """
 import sqlalchemy as sa
 from alembic import op
 
 # revision identifiers, used by Alembic.
-revision = "34ce244049db"
+revision = "63ccee3c5682"
 down_revision = None
 branch_labels = None
 depends_on = None
