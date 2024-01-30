@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.10",
+    "axios": "^1.6.7",
     "next": "14.0.3",
     "next-themes": "^0.2.1",
     "react": "^18",
