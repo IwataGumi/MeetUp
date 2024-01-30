@@ -46,7 +46,7 @@ function redirectToHomePage(request: NextRequest): NextResponse {
 
 async function middleware(request: NextRequest) {
   const response = await NextResponse.next();
-  const sessionId: RefreshTokenType | undefined = request.cookies.get('session_id')?.value;
+  const refreshToken: RefreshTokenType | undefined = request.cookies.get('session_id')?.value;
   let accessToken: AccessTokenType | undefined = request.cookies.get('access_token')?.value;
 
   console.log(request.nextUrl.pathname);
@@ -55,8 +55,8 @@ async function middleware(request: NextRequest) {
       return redirectToHomePage(request);
     }
 
-    if (sessionId !== undefined) {
-      accessToken = await refershToken(sessionId);
+    if (refreshToken !== undefined) {
+      accessToken = await refershToken(refreshToken);
       console.log(accessToken);
       if (accessToken !== undefined && (await checkAuth(accessToken))) {
         return redirectToHomePage(request);
@@ -65,8 +65,8 @@ async function middleware(request: NextRequest) {
   }
   // If accessToken is not validated or null.
   if (accessToken === undefined || (accessToken !== undefined && !(await checkAuth(accessToken)))) {
-    if (sessionId !== undefined) {
-      accessToken = await refershToken(sessionId);
+    if (refreshToken !== undefined) {
+      accessToken = await refershToken(refreshToken);
 
       // Check the accessToken was refreshed
       if (
