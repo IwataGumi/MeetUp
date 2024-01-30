@@ -1,8 +1,8 @@
 export const videoConstraints = {
   audio: true,
   video: {
-    width: 740,
-    height: 416,
+    width: 1920,
+    height: 1080,
   },
 }
 
@@ -11,6 +11,6 @@ export const videoMinimumSize = {
   height: 240,
 }
 
-export const defaultButtonSizeClass = 'w-[3.5rem] h-[3.5rem] min-h-[3.5rem]';
+export const defaultButtonSizeClass = 'w-[54px] h-[54px] min-h-[54px]';
 
 export const defaultButtonSize = 26;

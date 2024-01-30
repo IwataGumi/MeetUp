@@ -17,7 +17,7 @@ const CircleIconButton = ({
   return (
     <button
       onClick={onClick}
-      className={`${BUTTON_CLASS} ${buttonSizeClassName} ${className}`}
+      className={`${BUTTON_CLASS} ${className} ${buttonSizeClassName}`}
     >
       <Icon size={iconSize} />
     </button>
