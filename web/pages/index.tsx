@@ -70,7 +70,7 @@ const Home = () => {
           <div className="join flex">
             <input
               {...register("roomCode")}
-              className="flex-0 input input-bordered join-item"
+              className="flex-0 input input-bordered join-item pr-[0.2rem] sm:pr-[1rem]"
               placeholder="Room Code"
             />
             <button
@@ -84,7 +84,8 @@ const Home = () => {
             <button tabIndex={0} className="btn btn-neutral w-full mt-2">ルーム作成</button>
             <ul tabIndex={0} className="dropdown-content z-[1] menu mt-1 p-2 shadow rounded-box w-52">
               <li><button>今すぐ作成をする</button></li>
-              <li><button>予約する</button></li>
+              {/* TODO: 予約機能の作成 */}
+              {/* <li><button>予約する</button></li> */}
             </ul>
           </div>
         </div>
