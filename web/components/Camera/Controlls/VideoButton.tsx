@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { PiVideoCameraFill } from "react-icons/pi";
 import { PiVideoCameraSlashFill } from "react-icons/pi";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { defaultButtonSize, defaultButtonSizeClass } from "@/utils/static";
+import { defaultButtonSize, defaultButtonSizeClassName } from "@/utils/static";
 
 interface Props {
   iconSize: number;
@@ -47,7 +47,7 @@ const VideoButton = ({ iconSize, className, buttonSizeClassName }: Props) => {
 VideoButton.defaultProps = {
   iconSize: defaultButtonSize,
   className: '',
-  buttonSizeClassName: defaultButtonSizeClass,
+  buttonSizeClassName: defaultButtonSizeClassName,
 }
 
 export default VideoButton;

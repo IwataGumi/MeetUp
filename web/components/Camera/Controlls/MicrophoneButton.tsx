@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { PiMicrophoneFill } from "react-icons/pi";
 import { PiMicrophoneSlashFill } from "react-icons/pi";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { defaultButtonSize, defaultButtonSizeClass } from "@/utils/static";
+import { defaultButtonSize, defaultButtonSizeClassName } from "@/utils/static";
 
 interface Props {
   iconSize: number;
@@ -47,7 +47,7 @@ const MicrophoneButton = ({ iconSize, className, buttonSizeClassName }: Props) =
 MicrophoneButton.defaultProps = {
   iconSize: defaultButtonSize,
   className: '',
-  buttonSizeClassName: defaultButtonSizeClass,
+  buttonSizeClassName: defaultButtonSizeClassName,
 }
 
 export default MicrophoneButton;

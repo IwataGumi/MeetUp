@@ -1,6 +1,6 @@
-import { MdCallEnd } from "react-icons/md";
+import { PiChatTextFill } from "react-icons/pi";
 import CircleIconButton from "@/components/Button/CircleIconButton";
-import { defaultButtonSizeClassName } from "@/utils/static";
+import { defaultButtonSize, defaultButtonSizeClassName } from "@/utils/static";
 
 interface Props {
   className: string;
@@ -9,23 +9,22 @@ interface Props {
   onClick?: () => void;
 }
 
-const BUTTON_CLASS = 'btn btn-error';
-
-const LeaveButton = ({className, buttonSizeClassName, iconSize, onClick}: Props) => {
+const ChatButton = ({ className, buttonSizeClassName, iconSize, onClick }: Props) => {
   return (
     <CircleIconButton
-      Icon={MdCallEnd}
+      Icon={PiChatTextFill}
       iconSize={iconSize}
-      className={`${BUTTON_CLASS} ${className}`}
+      className={`btn-neutral ${className}`}
       buttonSizeClassName={buttonSizeClassName}
       onClick={onClick}
     />
   )
 }
 
-LeaveButton.defaultProps = {
+ChatButton.defaultProps = {
   className: '',
+  iconSize: defaultButtonSize,
   buttonSizeClassName: defaultButtonSizeClassName,
 }
 
-export default LeaveButton;
+export default ChatButton;
