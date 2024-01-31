@@ -69,7 +69,6 @@ const SelfCamera = ({ width, height, withControlls, className }: Props) => {
             </div>
             <div className="absolute top-0 right-0 p-2">
               <ConfigButton
-                className="btn-neutral"
                 onClick={() => configModalRef.current?.showModal()}
               />
             </div>

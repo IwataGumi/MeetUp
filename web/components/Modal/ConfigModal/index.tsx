@@ -5,6 +5,7 @@ import AudioContent from "./AudioContent";
 import VideoContent from "./VideoContent";
 import GeneralContent from "./GeneralContent";
 import ThemeContent from "./ThemeContent";
+import Modal from "@/components/Modal";
 
 interface Props {
   modalId?: string;
@@ -100,41 +101,32 @@ const ConfigModal = forwardRef<HTMLDialogElement, Props>(
     }
 
     return (
-      <dialog ref={ref} id={modalId} className="modal p-4">
-        <div className="modal-box flex flex-col max-w-[960px] min-h-[420px] max-h-full grid-cols-4">
-          <form method="dialog">
-            {/* if there is a button in form, it will close the modal */}
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-          </form>
-          <div className="flex justify-between mt-5 md:mt-0">
-            <article className="prose">
-              <h2 className='p-2 text-center'>設定</h2>
-            </article>
+      <Modal modalId={modalId} ref={ref}>
+        <div className="flex justify-between mt-5 md:mt-0">
+          <article className="prose">
+            <h2 className='p-2 text-center'>設定</h2>
+          </article>
 
-            {/* Smartphone menu */}
-            <div className="md:hidden">
-              { renderSelectorMenu() }
-            </div>
-          </div>
-
-          <div className="flex grow">
-            <div className="hidden md:flex">
-              <ul className="menu w-56 sticky top-0">
-                { renderMenu() }
-              </ul>
-              <div className="divider divider-horizontal"></div>
-            </div>
-
-
-            <div className="w-full mx-2 my-4 md:mt-0 overflow-y-auto max-h-[540px] min-h-[540px] h-full">
-              { renderContent()}
-            </div>
+          {/* Smartphone menu */}
+          <div className="md:hidden">
+            { renderSelectorMenu() }
           </div>
         </div>
-        <form method="dialog" className="modal-backdrop">
-          <button>close</button>
-        </form>
-      </dialog>
+
+        <div className="flex grow">
+          <div className="hidden md:flex">
+            <ul className="menu w-56 sticky top-0">
+              { renderMenu() }
+            </ul>
+            <div className="divider divider-horizontal"></div>
+          </div>
+
+
+          <div className="w-full mx-2 my-4 md:mt-0 overflow-y-auto max-h-[540px] min-h-[75vh] h-full">
+            { renderContent()}
+          </div>
+        </div>
+      </Modal>
     )
   }
 );

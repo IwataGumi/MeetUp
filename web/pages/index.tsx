@@ -15,16 +15,16 @@ const Home = () => {
         <div className="flex flex-col items-center">
           <h1 className="text-5xl font-bold">MeetUp</h1>
           <p className="py-6">無料で使えるビデオ通話アプリ</p>
-          <div className="join">
+          <div className="join flex">
             <input
               value={roomId}
               onChange={(e) => {setRoomId(e.target.value)}}
-              className="input input-bordered join-item"
+              className="flex-0 input input-bordered join-item"
               placeholder="Room Code"
             />
             <button
               onClick={joinRoom}
-              className="btn btn-neutral join-item"
+              className="flex-1 btn btn-neutral join-item"
             >
               参加
             </button>
