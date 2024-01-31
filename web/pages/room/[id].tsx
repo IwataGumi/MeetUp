@@ -6,11 +6,14 @@ import VideoButton from "@/components/Camera/Controlls/VideoButton";
 import ConfigButton from "@/components/Camera/Controlls/ConfigButton";
 import LeaveButton from "@/components/Camera/Controlls/LeaveButton";
 import ConfigModal from "@/components/Modal/ConfigModal";
+import ChatModal from "@/components/Modal/ChatModal";
+import ChatButton from "@/components/Camera/Controlls/ChatButton";
 
 const Room = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const users = [{}];
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const chatModalRef = useRef<HTMLDialogElement>(null);
   const configModalRef = useRef<HTMLDialogElement>(null);
   const [size, setSize] = useState<{ width: number; height: number }>({
     width: 0,
@@ -71,6 +74,12 @@ const Room = () => {
               className={buttonClassName}
               onClick={() => configModalRef.current?.showModal()}
             />
+            <ChatButton
+              iconSize={controllButtonSize}
+              buttonSizeClassName={buttonSizeClassName}
+              className={buttonClassName}
+              onClick={() => chatModalRef.current?.showModal()}
+            />
             <LeaveButton
               iconSize={controllButtonSize}
               buttonSizeClassName={buttonSizeClassName}
@@ -78,6 +87,7 @@ const Room = () => {
             />
         </div>
       </div>
+      <ChatModal ref={chatModalRef} />
       <ConfigModal ref={configModalRef} />
     </>
   );
