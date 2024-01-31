@@ -1,6 +1,6 @@
 import { PiGearSixFill } from "react-icons/pi";
 import CircleIconButton from "@/components/Button/CircleIconButton";
-import { defaultButtonSize, defaultButtonSizeClass } from "@/utils/static";
+import { defaultButtonSize, defaultButtonSizeClassName } from "@/utils/static";
 
 interface Props {
   className: string;
@@ -24,7 +24,7 @@ const ConfigButton = ({ className, buttonSizeClassName, iconSize, onClick }: Pro
 ConfigButton.defaultProps = {
   className: '',
   iconSize: defaultButtonSize,
-  buttonSizeClassName: defaultButtonSizeClass,
+  buttonSizeClassName: defaultButtonSizeClassName,
 }
 
 export default ConfigButton;

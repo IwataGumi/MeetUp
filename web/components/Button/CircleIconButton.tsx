@@ -1,4 +1,4 @@
-import { defaultButtonSizeClass } from "@/utils/static";
+import { defaultButtonSizeClassName } from "@/utils/static";
 import { IconType } from "react-icons";
 
 interface Props {
@@ -26,7 +26,7 @@ const CircleIconButton = ({
 
 CircleIconButton.defaultProps = {
   className: '',
-  buttonSizeClassName: defaultButtonSizeClass,
+  buttonSizeClassName: defaultButtonSizeClassName,
 }
 
 export default CircleIconButton;

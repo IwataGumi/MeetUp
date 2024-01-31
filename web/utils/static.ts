@@ -11,6 +11,7 @@ export const videoMinimumSize = {
   height: 240,
 }
 
-export const defaultButtonSizeClass = 'w-[54px] h-[54px] min-h-[54px]';
+export const defaultButtonSizeClassName = 'w-[54px] h-[54px] min-h-[54px]';
+export const defaultModalSizeClassName = 'max-w-[960px] min-h-[75vh]';
 
 export const defaultButtonSize = 26;

@@ -1,6 +1,6 @@
 import { IconType } from "react-icons";
 import CircleIconButton from "./CircleIconButton";
-import { defaultButtonSize, defaultButtonSizeClass } from "@/utils/static";
+import { defaultButtonSize, defaultButtonSizeClassName } from "@/utils/static";
 
 interface Props {
   state: boolean;
@@ -45,7 +45,7 @@ ToggleButton.defaultProps = {
   iconSize: defaultButtonSize,
   ActiveClassName: '',
   PassiceClassName: '',
-  buttonSizeClassName: defaultButtonSizeClass,
+  buttonSizeClassName: defaultButtonSizeClassName,
 }
 
 export default ToggleButton;

@@ -1,6 +1,6 @@
 import { MdCallEnd } from "react-icons/md";
 import CircleIconButton from "@/components/Button/CircleIconButton";
-import { defaultButtonSizeClass } from "@/utils/static";
+import { defaultButtonSizeClassName } from "@/utils/static";
 
 interface Props {
   className: string;
@@ -25,7 +25,7 @@ const LeaveButton = ({className, buttonSizeClassName, iconSize, onClick}: Props)
 
 LeaveButton.defaultProps = {
   className: '',
-  buttonSizeClassName: defaultButtonSizeClass,
+  buttonSizeClassName: defaultButtonSizeClassName,
 }
 
 export default LeaveButton;
