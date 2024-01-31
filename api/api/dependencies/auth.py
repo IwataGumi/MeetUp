@@ -1,5 +1,5 @@
 from typing import Optional
-from api.chemas.user import UserInfo
+from api.schemas.user import UserInfo
 
 from fastapi import Cookie, Depends, Header, HTTPException, status
 from jose import ExpiredSignatureError, JWTError, jwt

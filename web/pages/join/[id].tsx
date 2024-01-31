@@ -19,8 +19,6 @@ const Join = () => {
       setUser({...user, username: userName})
     }
 
-    toast('Hello World');
-
     router.push(`/room/${router.query.id}`)
   }
 
