@@ -3,7 +3,7 @@
 
 ![MeetUp - 広瀬エイトル_ページ_01](https://github.com/IwataGumi/MeetUp/assets/70084358/71a40352-3c64-425b-825a-8d1a1a9bdcbf)
 
-<div style="display: flex;">
+<div style="display: flex; justify-content: center;">
   <img
     src="https://github.com/IwataGumi/MeetUp/assets/70084358/9f95ccfa-aaa7-46bc-b798-105c3017d37f"
     width="30%">
