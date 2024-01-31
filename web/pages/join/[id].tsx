@@ -4,6 +4,7 @@ import { userState } from '@/atoms/userState';
 import SelfCamera from '@/components/Camera/SelfCamera';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import toast from 'react-hot-toast';
 
 const Join = () => {
   const router = useRouter();
@@ -17,6 +18,8 @@ const Join = () => {
     } else {
       setUser({...user, username: userName})
     }
+
+    toast('Hello World');
 
     router.push(`/room/${router.query.id}`)
   }
