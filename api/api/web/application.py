@@ -7,6 +7,7 @@ from fastapi.staticfiles import StaticFiles
 
 from api.logging import configure_logging
 from api.web.api.router import api_router
+from api.web.ws.router import ws_router
 from api.web.lifetime import register_shutdown_event, register_startup_event
 
 APP_ROOT = Path(__file__).parent.parent
@@ -35,6 +36,9 @@ def get_app() -> FastAPI:
 
     # Main router for the API.
     app.include_router(router=api_router, prefix="/api")
+
+    # Main router for the WebSocket.
+    app.include_router(router=ws_router, prefix="/ws")
 
     # Adds static directory.
     # This directory is used to access swagger files.
