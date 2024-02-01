@@ -1,6 +1,5 @@
 from importlib import metadata
 from pathlib import Path
-from api.services.socketio.application import get_sio_app
 
 from fastapi import FastAPI
 from fastapi.responses import UJSONResponse
@@ -45,10 +44,4 @@ def get_app() -> FastAPI:
         name="static",
     )
 
-    sio_app = get_sio_app(app)
-
-    # Add socketio routes
-    app.mount("/socket.io", sio_app)
-
-
-    return sio_app
+    return app
