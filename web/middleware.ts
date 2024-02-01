@@ -96,7 +96,7 @@ async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/'],
+  matcher: ['/room/:path*'],
 };
 
 export default middleware;
