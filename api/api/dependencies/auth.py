@@ -1,4 +1,5 @@
 from typing import Optional
+from api.db.models.user_model import UserModel
 from api.schemas.user import UserInfo
 
 from fastapi import Cookie, Depends, Header, HTTPException, status
@@ -11,7 +12,7 @@ from api.settings import settings
 async def with_authenticate(
     user_dao: UserDAO = Depends(),
     authorization: Optional[str] = Header(default=None),
-) -> UserInfo:
+) -> UserModel:
     if authorization is None:
         HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -48,8 +49,7 @@ async def with_authenticate(
     user = await user_dao.get_user(payload["user_id"])
 
     if user is not None:
-        authenticated_user = UserInfo.model_validate(user, from_attributes=True)
-        return authenticated_user
+        return user
 
     raise HTTPException(
         status_code=404,
