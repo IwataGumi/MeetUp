@@ -2,10 +2,6 @@ import { atom } from 'recoil';
 
 const LOCAL_STORAGE_NAME = 'userInfo';
 
-type UserType = {
-  username?: string;
-}
-
 const getUserInfo = () => {
   if (typeof window === 'undefined') {
     return {} as UserType;
