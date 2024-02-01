@@ -1,4 +1,4 @@
-from typing import List
+from typing import Annotated, List
 import uuid
 from api.schemas.room import RoomInfo
 from api.schemas.token import CredentialsTokens
@@ -8,7 +8,7 @@ from api.settings import settings
 from api.db.dao.room_dao import RoomDAO
 from api.db.dao.user_dao import UserDAO
 from api.db.models.room_model import RoomModel
-from fastapi import APIRouter, Depends, HTTPException, Response, status
+from fastapi import APIRouter, Depends, HTTPException, Response, status, Path
 from fastapi.responses import JSONResponse
 from loguru import logger
 
@@ -62,9 +62,10 @@ async def create_room(
 
 @router.get('/{room_uuid}', response_model=RoomInfo)
 async def room_details(
-    room_uuid: uuid.UUID,
+    room_uuid: Annotated[uuid.UUID, Path(title="The uuid of room.")],
     room_dao: RoomDAO = Depends(),
 ) -> Response:
+    print(room_uuid)
     room = await room_dao.get_room(room_uuid)
 
     if room is None:
@@ -80,7 +81,7 @@ async def room_details(
 
 @router.get('/{room_uuid}/users/', response_model=List[UserInfo])
 async def room_users(
-    room_uuid: uuid.UUID,
+    room_uuid: Annotated[uuid.UUID, Path(title="The uuid of room.")],
     room_dao: RoomDAO = Depends(),
 ) -> Response:
     room = await room_dao.get_room(room_uuid)
@@ -95,9 +96,9 @@ async def room_users(
 
     return users
 
-@router.post('/{room_uid}/users/', response_model=CredentialsTokens)
+@router.post('/{room_uuid}/users/', response_model=CredentialsTokens)
 async def create_user(
-    room_uuid: uuid.UUID,
+    room_uuid: Annotated[uuid.UUID, Path(title="The uuid of room.")],
     user_dao: UserDAO = Depends(),
     room_dao: RoomDAO = Depends(),
 ) -> Response:
