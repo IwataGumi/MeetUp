@@ -4,6 +4,7 @@ import Header from '@/components/Header'
 import type { AppProps } from 'next/app'
 import { ThemeProvider } from 'next-themes'
 import { Toaster } from 'react-hot-toast'
+import Socket from '@/components/Socket'
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -18,6 +19,7 @@ export default function App({ Component, pageProps }: AppProps) {
             position="top-right"
             reverseOrder={false}
           />
+          <Socket />
         </div>
       </ThemeProvider>
     </RecoilRoot>
