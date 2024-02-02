@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { userState } from '@/atoms/userState';
+import { userProfileState } from '@/atoms/userProfileState';
 import SelfCamera from '@/components/Camera/SelfCamera';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -8,15 +8,15 @@ import axios from 'axios';
 
 const Join = () => {
   const router = useRouter();
-  const [user, setUser] = useRecoilState(userState);
-  const [userName, setUserName] = useState(user.username || '');
+  const [userProfile, setUserProfile] = useRecoilState(userProfileState);
+  const [userName, setUserName] = useState(userProfile.username || '');
 
   const joinRoom = async () => {
     if (userName === '' || userName.length > 20) {
       setUserName('ゲスト')
-      setUser({...user, username: 'ゲスト'})
+      setUserProfile({...userProfile, username: 'ゲスト'})
     } else {
-      setUser({...user, username: userName})
+      setUserProfile({...userProfile, username: userName})
     }
 
     router.push(`/room/${router.query.id}`)
