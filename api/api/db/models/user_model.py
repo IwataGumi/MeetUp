@@ -15,3 +15,5 @@ class UserModel(Base):
     )
     is_owner: Mapped[bool] = mapped_column(Boolean, default=False)
     room_id = mapped_column(UUID(as_uuid=True), ForeignKey("rooms.id"))
+
+UserModel.room = relationship("RoomModel", back_populates='users')
