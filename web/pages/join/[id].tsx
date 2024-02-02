@@ -4,7 +4,6 @@ import { userState } from '@/atoms/userState';
 import SelfCamera from '@/components/Camera/SelfCamera';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import toast from 'react-hot-toast';
 import axios from 'axios';
 
 const Join = () => {
@@ -20,12 +19,7 @@ const Join = () => {
       setUser({...user, username: userName})
     }
 
-    await axios
-      .post(`/rooms/${router.query.id}/users/`)
-      .then(() => router.push(`/room/${router.query.id}`))
-      .catch((error) => {
-        console.log(error)
-      })
+    router.push(`/room/${router.query.id}`)
   }
 
   useEffect(() => {

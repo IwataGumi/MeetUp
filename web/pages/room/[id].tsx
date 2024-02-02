@@ -8,13 +8,12 @@ import LeaveButton from "@/components/Camera/Controlls/LeaveButton";
 import ConfigModal from "@/components/Modal/ConfigModal";
 import ChatModal from "@/components/Modal/ChatModal";
 import ChatButton from "@/components/Camera/Controlls/ChatButton";
+import VideoControlls from "@/components/Camera/Controlls/VideoControlls";
 
 const Room = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const users = [{}];
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const chatModalRef = useRef<HTMLDialogElement>(null);
-  const configModalRef = useRef<HTMLDialogElement>(null);
   const [size, setSize] = useState<{ width: number; height: number }>({
     width: 0,
     height: 0,
@@ -22,10 +21,6 @@ const Room = () => {
 
   const itemPerRow = Math.ceil(Math.sqrt((users?.length ?? 0)));
   const row = Math.ceil(((users?.length ?? 0)) / itemPerRow);
-
-  const buttonClassName = 'mx-1 mb-2'
-  const buttonSizeClassName = 'h-[3rem] w-[3rem] min-h-[3rem]'
-  const controllButtonSize = 24
 
   useEffect(() => {
     const element = wrapperRef.current;
@@ -57,38 +52,8 @@ const Room = () => {
             <SelfCamera className="m-2 w-full h-full" width={size.width} height={size.height} />
           </div>
         </div>
-        <div className="fixed bg-base-100 bottom-0 left-0 h-16 w-full flex-0 flex justify-center items-center">
-            <MicrophoneButton
-              iconSize={controllButtonSize}
-              buttonSizeClassName={buttonSizeClassName}
-              className={buttonClassName}
-            />
-            <VideoButton
-              iconSize={controllButtonSize}
-              buttonSizeClassName={buttonSizeClassName}
-              className={buttonClassName}
-            />
-            <ConfigButton
-              iconSize={controllButtonSize}
-              buttonSizeClassName={buttonSizeClassName}
-              className={buttonClassName}
-              onClick={() => configModalRef.current?.showModal()}
-            />
-            <ChatButton
-              iconSize={controllButtonSize}
-              buttonSizeClassName={buttonSizeClassName}
-              className={buttonClassName}
-              onClick={() => chatModalRef.current?.showModal()}
-            />
-            <LeaveButton
-              iconSize={controllButtonSize}
-              buttonSizeClassName={buttonSizeClassName}
-              className={buttonClassName}
-            />
-        </div>
+        <VideoControlls />
       </div>
-      <ChatModal ref={chatModalRef} />
-      <ConfigModal ref={configModalRef} />
     </>
   );
 };
