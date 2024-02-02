@@ -53,7 +53,6 @@ const createNewUser = async (): Promise<CredentialsType | undefined> => {
 const whenNotAuthenticated = async (request: NextRequest ,response: NextResponse): Promise<NextResponse> => {
   const credentials = await createNewUser()
   if (credentials !== undefined) {
-    console.log(credentials)
     response.cookies.set({
       name: 'refresh_token',
       value: credentials.refresh_token,

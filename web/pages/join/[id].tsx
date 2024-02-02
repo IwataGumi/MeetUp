@@ -34,7 +34,6 @@ const Join = () => {
               router.push('/')
               break;
             default:
-              console.log(error)
               break;
           }
         }
