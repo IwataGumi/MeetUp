@@ -11,6 +11,8 @@ export const videoMinimumSize = {
   height: 240,
 }
 
+export const WebSocketURL = process.env.NEXT_PUBLIC_WEBSOCKET_URL
+
 export const supportedTheme: string[] = [
   "light", "dark", "cupcake", "bumblebee",
   "emerald", "corporate", "synthwave", "retro",
