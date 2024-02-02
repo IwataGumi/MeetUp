@@ -90,7 +90,7 @@ const middleware = async (request: NextRequest) => {
           sameSite: 'strict',
           domain: request.nextUrl.domainLocale?.domain,
         });
-        return true
+        return response
       }
     }
     return false;
