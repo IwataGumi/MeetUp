@@ -1,13 +1,6 @@
 import SelfCamera from "@/components/Camera/SelfCamera";
 import { useEffect, useRef, useState } from "react";
 import { videoMinimumSize } from '@/utils/static';
-import MicrophoneButton from "@/components/Camera/Controlls/MicrophoneButton";
-import VideoButton from "@/components/Camera/Controlls/VideoButton";
-import ConfigButton from "@/components/Camera/Controlls/ConfigButton";
-import LeaveButton from "@/components/Camera/Controlls/LeaveButton";
-import ConfigModal from "@/components/Modal/ConfigModal";
-import ChatModal from "@/components/Modal/ChatModal";
-import ChatButton from "@/components/Camera/Controlls/ChatButton";
 import VideoControlls from "@/components/Camera/Controlls/VideoControlls";
 
 const Room = () => {
