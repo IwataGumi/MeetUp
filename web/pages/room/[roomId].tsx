@@ -44,7 +44,7 @@ const Room = () => {
       <div className="m-2 mt-16 flex flex-col">
         {/* <VideoContainer />
         <VideoControlls /> */}
-         <button className="btn btn-primary" onClick={() => websocketRef.current?.send_json('送信メッセージ')}>
+         <button className="btn btn-primary" onClick={() => websocketRef.current?.send('送信メッセージ')}>
           Test
          </button>
       </div>
