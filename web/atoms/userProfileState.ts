@@ -1,17 +1,18 @@
+import { UserProfileType } from '@/@types/state';
 import { atom } from 'recoil';
 
-const LOCAL_STORAGE_NAME = 'userInfo';
+const LOCAL_STORAGE_NAME = 'userProfile';
 
 const getUserInfo = () => {
   if (typeof window === 'undefined') {
-    return {} as UserType;
+    return {} as UserProfileType;
   }
 
   const user = window.localStorage.getItem(LOCAL_STORAGE_NAME);
-  return user ? JSON.parse(user) as UserType : {} as UserType;
+  return user ? JSON.parse(user) as UserProfileType : {} as UserProfileType;
 }
 
-const saveItemToLocalStorage = (value: UserType) => {
+const saveItemToLocalStorage = (value: UserProfileType) => {
   if (typeof window === 'undefined') {
     return;
   }
@@ -19,8 +20,8 @@ const saveItemToLocalStorage = (value: UserType) => {
   window.localStorage.setItem(LOCAL_STORAGE_NAME, JSON.stringify(value));
 }
 
-export const userState = atom({
-  key: 'userState',
+export const userProfileState = atom({
+  key: 'userProfileState',
   default: getUserInfo(),
   effects: [
     ({ onSet }) => {

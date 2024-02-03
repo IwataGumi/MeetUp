@@ -1,51 +1,46 @@
 import { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
-import { userState } from '@/atoms/userState';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { userProfileState } from '@/atoms/userProfileState';
 import SelfCamera from '@/components/Camera/SelfCamera';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import toast from 'react-hot-toast';
 import axios from 'axios';
+import { preparedState } from '@/atoms/prepeardState';
 
 const Join = () => {
   const router = useRouter();
-  const [user, setUser] = useRecoilState(userState);
-  const [userName, setUserName] = useState(user.username || '');
+  const setPrepared = useSetRecoilState(preparedState);
+  const [userProfile, setUserProfile] = useRecoilState(userProfileState);
+  const [userName, setUserName] = useState(userProfile.username || '');
 
   const joinRoom = async () => {
     if (userName === '' || userName.length > 20) {
       setUserName('ゲスト')
-      setUser({...user, username: 'ゲスト'})
+      setUserProfile({...userProfile, username: 'ゲスト'})
     } else {
-      setUser({...user, username: userName})
+      setUserProfile({...userProfile, username: userName})
     }
 
-    await axios
-      .post(`/rooms/${router.query.id}/users/`)
-      .then(() => router.push(`/room/${router.query.id}`))
-      .catch((error) => {
-        console.log(error)
-      })
+    setPrepared(true)
+    router.push(`/room/${router.query.roomId}`)
   }
 
   useEffect(() => {
-    if (router.query.id == undefined) return
+    if (router.query.roomId == undefined) return
 
-    axios.get(`/api/rooms/${router.query.id}`)
+    axios.get(`/api/rooms/${router.query.roomId}`)
       .catch((error) => {
         if (error.response) {
           switch (error.response.status) {
-            case 422:
-            case 404:
-              router.push('/')
+            case 200:
               break;
             default:
-              console.log(error)
+              router.push('/')
               break;
           }
         }
       })
-  }, [router, router.query.id]);
+  }, [router, router.isReady, router.query.roomId]);
 
   return (
     <div className='flex flex-col justify-center items-center'>

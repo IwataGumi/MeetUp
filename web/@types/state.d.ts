@@ -1,14 +1,22 @@
-type muteControlsType = {
+import { UUID } from "crypto";
+
+export type muteControlsType = {
   camera: boolean;
   microphone: boolean;
 }
 
-type DefaultDevicesType = {
+export type DefaultDevicesType = {
   microphone?: MediaDeviceInfo;
   speaker?: MediaDeviceInfo;
   camera?: MediaDeviceInfo;
 }
 
-type UserType = {
+export type UserProfileType = {
   username?: string;
+}
+
+export type UserType = {
+  userId: string;
+  username: string;
+  type: "offer" | "answer"
 }

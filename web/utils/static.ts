@@ -1,8 +1,9 @@
 export const videoConstraints = {
   audio: true,
   video: {
-    width: 1920,
-    height: 1080,
+    width: { min: 320 , max:3840 },
+    height: { min: 240, max:2160 },
+    aspectRatio: 1.777777778,
   },
 }
 
@@ -10,6 +11,8 @@ export const videoMinimumSize = {
   width: 426,
   height: 240,
 }
+
+export const WebSocketURL = process.env.NEXT_PUBLIC_WEBSOCKET_URL
 
 export const supportedTheme: string[] = [
   "light", "dark", "cupcake", "bumblebee",

@@ -49,11 +49,9 @@ const Home = () => {
           switch (error.response.status) {
             case 404:
             case 422:
-              console.log(error.response.status)
               invalidRoomToast('notFound')
               break
             default:
-              console.log(error)
               invalidRoomToast('error')
               break
           }
