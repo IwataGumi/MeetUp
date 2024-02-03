@@ -101,7 +101,7 @@ const ConfigModal = forwardRef<HTMLDialogElement, Props>(
     }
 
     return (
-      <Modal modalId={modalId} ref={ref}>
+      <Modal modalSizeclassName="max-w-[960px] min-h-[420px] w-full" modalId={modalId} ref={ref}>
         <div className="flex justify-between mt-5 md:mt-0">
           <article className="prose">
             <h2 className='p-2 text-center'>設定</h2>
