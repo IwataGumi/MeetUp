@@ -1,5 +1,6 @@
 import uuid
 from typing import List
+from api.db.models.associations.room_user import RoomLinkUser
 from api.db.models.room_model import RoomModel
 from api.db.models.user_model import UserModel
 from fastapi import Depends
@@ -13,12 +14,12 @@ class RoomDAO:
     def __init__(self, session: AsyncSession = Depends(get_db_session)):
         self.session = session
 
-    async def create_room(self):
+    async def create_room(self, owner_user: UserModel):
         """Add new room to the database.
 
         :returns: if succeed to create room, will return Room object.
         """
-        room = RoomModel()
+        room = RoomModel(owner_id=owner_user.id)
         self.session.add(room)
         await self.session.flush()
 
@@ -36,18 +37,30 @@ class RoomDAO:
         return user
 
     async def add_user(self, room: RoomModel, user: UserModel) -> None:
-        await self.session.refresh(room, attribute_names=["users"])
-        room.users.append(user)
+        await self.session.refresh(room, attribute_names=["users", "user_associations"])
+        if not user in room.users:
+            room.users.append(user)
+        await self.session.flush()
 
     async def leave_user(self, room: RoomModel, user: UserModel) -> None:
         await self.session.refresh(room, attribute_names=["users"])
         if user in room.users:
-            room.users = [u for u in room.users if u != user]
+            room.users.remove(user)
+        await self.session.flush()
 
     async def add_user_by_uuid(self, room_uuid: uuid.UUID, user: UserModel) -> None:
         room = await self.get_room(room_uuid)
         await self.session.refresh(room, attribute_names=["users"])
-        room.users.append(user)
+        if (room is not None) and (not user in room.users):
+            room.users.append(user)
+        await self.session.flush()
+
+    async def leave_user_by_uuid(self, room_uuid: uuid.UUID, user: UserModel):
+        room = await self.get_room(room_uuid)
+        await self.session.refresh(room, attribute_names=["users"])
+        if (room is not None) and (user in room.users):
+            room.users.remove(user)
+        await self.session.flush()
 
     async def get_users(self, room: RoomModel) -> RoomModel:
         await self.session.refresh(room, attribute_names=["users"])
