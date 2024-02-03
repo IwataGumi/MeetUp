@@ -1,43 +1,6 @@
+import { themeType } from '@/@types/theme';
 import { useTheme } from 'next-themes'
 
-
-
-export const supportedTheme = [
-  "light",
-  "dark",
-  "cupcake",
-  "bumblebee",
-  "emerald",
-  "corporate",
-  "synthwave",
-  "retro",
-  "cyberpunk",
-  "valentine",
-  "halloween",
-  "garden",
-  "forest",
-  "aqua",
-  "lofi",
-  "pastel",
-  "fantasy",
-  "wireframe",
-  "black",
-  "luxury",
-  "dracula",
-  "cmyk",
-  "autumn",
-  "business",
-  "acid",
-  "lemonade",
-  "night",
-  "coffee",
-  "winter",
-  "dim",
-  "nord",
-  "sunset",
-] as const;
-
-export type themeType = typeof supportedTheme[number];
 
 interface Props {
   themeName: themeType;

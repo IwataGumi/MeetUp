@@ -14,4 +14,3 @@ export const screenStreamState = atom<MediaStream | undefined>({
   key: 'screenStreamState',
   default: undefined,
 })
-

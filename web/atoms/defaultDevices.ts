@@ -2,12 +2,6 @@ import { atom } from 'recoil';
 
 const LOCAL_STORAGE_NAME = 'defaultDevices'
 
-type DefaultDevicesType = {
-  microphone?: MediaDeviceInfo;
-  speaker?: MediaDeviceInfo;
-  camera?: MediaDeviceInfo;
-}
-
 const filterDevicesByType = (devices: MediaDeviceInfo[], type: MediaDeviceKind) => {
   return devices.filter((device) => device.kind === type);
 }
@@ -48,8 +42,8 @@ const saveItemToLocalStorage = (value: DefaultDevicesType) => {
   window.localStorage.setItem(LOCAL_STORAGE_NAME, JSON.stringify(value));
 };
 
-export const defaultDevices = atom({
-  key: 'devicesState',
+export const defaultDevicesState = atom({
+  key: 'defaultDevicesState',
   default: getLocalStorageItem(),
   effects: [
     ({ onSet }) => {

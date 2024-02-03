@@ -1,4 +1,5 @@
-import ThemeCard, { supportedTheme } from "@/components/ThemeCard";
+import ThemeCard from "@/components/ThemeCard";
+import { supportedTheme } from "@/utils/static";
 
 const ThemeContent = () => {
   const renderThemeCards = () => {

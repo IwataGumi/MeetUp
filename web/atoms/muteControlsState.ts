@@ -1,11 +1,6 @@
 import { atom } from "recoil";
 
-const LOCAL_STORAGE_NAME = 'videoControls';
-
-type muteControlsType = {
-  camera: boolean;
-  microphone: boolean;
-}
+const LOCAL_STORAGE_NAME = 'muteControls';
 
 const defaultMuteControls: muteControlsType = {
   camera: false,
@@ -30,7 +25,7 @@ const saveItemToLocalStorage = (value: muteControlsType) => {
 }
 
 export const muteControlsState = atom<muteControlsType>({
-  key: 'videoControlState',
+  key: 'muteControlsState',
   default: getVideoControls(),
   effects: [
     ({ onSet }) => {

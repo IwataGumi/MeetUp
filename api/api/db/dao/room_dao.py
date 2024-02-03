@@ -39,6 +39,11 @@ class RoomDAO:
         await self.session.refresh(room, attribute_names=["users"])
         room.users.append(user)
 
+    async def leave_user(self, room: RoomModel, user: UserModel) -> None:
+        await self.session.refresh(room, attribute_names=["users"])
+        if user in room.users:
+            room.users = [u for u in room.users if u != user]
+
     async def add_user_by_uuid(self, room_uuid: uuid.UUID, user: UserModel) -> None:
         room = await self.get_room(room_uuid)
         await self.session.refresh(room, attribute_names=["users"])
