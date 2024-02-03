@@ -14,7 +14,7 @@ const Room = () => {
     if (websocketRef === undefined) return;
 
     const websocket = new ReconnectingWebSocket(
-      `${WebSocketURL}/ws/rooms/${router.query.id}`
+      `${WebSocketURL}/ws/rooms/${roomId}`
     );
     websocketRef.current = websocket;
 
@@ -30,7 +30,7 @@ const Room = () => {
       websocket.removeEventListener('message', onMessage)
     }
 
-  }, [router.query.id])
+  }, [])
 
   useEffect(() => {
     const { roomId } = router.query;
@@ -42,11 +42,11 @@ const Room = () => {
   return (
     <>
       <div className="m-2 mt-16 flex flex-col">
-        <VideoContainer />
-        <VideoControlls />
-         {/* <button className="btn btn-primary" onClick={() => websocketRef.current?.send('送信メッセージ')}>
+        {/* <VideoContainer />
+        <VideoControlls /> */}
+         <button className="btn btn-primary" onClick={() => websocketRef.current?.send_json('送信メッセージ')}>
           Test
-         </button> */}
+         </button>
       </div>
     </>
   );
