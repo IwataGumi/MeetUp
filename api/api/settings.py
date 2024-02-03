@@ -1,7 +1,7 @@
 import enum
 from pathlib import Path
 from tempfile import gettempdir
-from typing import Literal
+from typing import List, Literal
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from yarl import URL
@@ -10,6 +10,7 @@ TEMP_DIR = Path(gettempdir())
 
 
 EnvironmentType = Literal["dev", "prod"]
+
 
 class LogLevel(str, enum.Enum):  # noqa: WPS600
     """Possible log levels."""
@@ -29,10 +30,17 @@ class Settings(BaseSettings):
     These parameters can be configured
     with environment variables.
     """
-    domain: str = 'localhost'
+
+    domain: str = "localhost"
     host: str = "127.0.0.1"
     port: int = 8000
     web_uri: str = "http://localhost:3000/"
+
+    origins: List[str] = [
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "http://web:3000",
+    ]
 
     # quantity of workers for uvicorn
     workers_count: int = 1
@@ -67,8 +75,7 @@ class Settings(BaseSettings):
 
     @property
     def is_production(self) -> bool:
-        return self.environment != 'dev'
-
+        return self.environment != "dev"
 
     @property
     def db_url(self) -> URL:

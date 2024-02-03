@@ -1,9 +1,11 @@
 from typing import Optional
+from api.db.dependencies import get_db_session
 from api.db.models.user_model import UserModel
-from api.schemas.user import UserInfo
 
 from fastapi import Cookie, Depends, Header, HTTPException, status
+from starlette.requests import HTTPConnection
 from jose import ExpiredSignatureError, JWTError, jwt
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from api.db.dao.user_dao import UserDAO
 from api.settings import settings
@@ -11,9 +13,10 @@ from api.settings import settings
 
 async def with_authenticate(
     user_dao: UserDAO = Depends(),
+    access_token: str = Cookie(default=None),
     authorization: Optional[str] = Header(default=None),
 ) -> UserModel:
-    if authorization is None:
+    if authorization is None and access_token is None:
         HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Authorization credentials is missing.",
@@ -22,6 +25,8 @@ async def with_authenticate(
 
     if authorization is not None:
         jwt_token = authorization.rsplit(maxsplit=1)[-1]
+    elif access_token is not None:
+        jwt_token = access_token
     else:
         raise HTTPException(
             status_code=401,
