@@ -3,7 +3,7 @@ import { AccessTokenType, CredentialsType, RefreshTokenType } from './@types/axi
 import { boolean } from 'yup';
 
 const refreshAccessToken = async (refreshToken: RefreshTokenType): Promise<undefined | AccessTokenType> => {
-  const token = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/token/refresh`, {
+  const token = await fetch(`${process.env.API_URL}/api/token/refresh`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -22,7 +22,7 @@ const refreshAccessToken = async (refreshToken: RefreshTokenType): Promise<undef
 }
 
 const confirmAccessToken = async (accessToken: AccessTokenType): Promise<boolean> => {
-  const isSucceeded = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users/me`, {
+  const isSucceeded = await fetch(`${process.env.API_URL}/api/users/me`, {
     method: 'GET',
     headers: {
       Accept: 'application/json',
@@ -35,7 +35,7 @@ const confirmAccessToken = async (accessToken: AccessTokenType): Promise<boolean
 }
 
 const createNewUser = async (): Promise<CredentialsType | undefined> => {
-  const credentials = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users`, {
+  const credentials = await fetch(`${process.env.API_URL}/api/users`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',

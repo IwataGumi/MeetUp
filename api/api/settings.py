@@ -1,7 +1,7 @@
 import enum
 from pathlib import Path
 from tempfile import gettempdir
-from typing import Literal
+from typing import List, Literal
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from yarl import URL
@@ -35,6 +35,12 @@ class Settings(BaseSettings):
     host: str = "127.0.0.1"
     port: int = 8000
     web_uri: str = "http://localhost:3000/"
+
+    origins: List[str] = [
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "http://web:3000",
+    ]
 
     # quantity of workers for uvicorn
     workers_count: int = 1

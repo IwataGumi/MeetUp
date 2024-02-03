@@ -21,8 +21,12 @@ class RoomLinkUser(Base):
         primary_key=True,
     )
     room: Mapped["RoomModel"] = relationship(
-        "RoomModel", back_populates="user_associations"
+        "RoomModel",
+        back_populates="user_associations",
+        viewonly=True,
     )
     user: Mapped["UserModel"] = relationship(
-        "UserModel", back_populates="room_associations"
+        "UserModel",
+        back_populates="room_associations",
+        viewonly=True,
     )

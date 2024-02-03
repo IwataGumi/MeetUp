@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { userProfileState } from '@/atoms/userProfileState';
 import SelfCamera from '@/components/Camera/SelfCamera';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import { preparedState } from '@/atoms/prepeardState';
 
 const Join = () => {
   const router = useRouter();
+  const setPrepared = useSetRecoilState(preparedState);
   const [userProfile, setUserProfile] = useRecoilState(userProfileState);
   const [userName, setUserName] = useState(userProfile.username || '');
 
@@ -19,6 +21,7 @@ const Join = () => {
       setUserProfile({...userProfile, username: userName})
     }
 
+    setPrepared(true)
     router.push(`/room/${router.query.roomId}`)
   }
 
@@ -29,11 +32,10 @@ const Join = () => {
       .catch((error) => {
         if (error.response) {
           switch (error.response.status) {
-            case 422:
-            case 404:
-              router.push('/')
+            case 200:
               break;
             default:
+              router.push('/')
               break;
           }
         }

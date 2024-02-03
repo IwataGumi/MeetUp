@@ -1,131 +1,88 @@
-from datetime import datetime
-from typing import Any, Dict, List, Set, Union
+from typing import Annotated
 import uuid
-from enum import Enum
+from api.db.dao.room_dao import RoomDAO
+from api.db.models.user_model import UserModel
+from api.dependencies.auth import ws_with_autheticate
+from api.web.ws.rooms.connection_manager import ConnectionManager
+from api.web.ws.rooms.receive.schemas import (
+    ReceiveChatBody,
+    ReceiveContent,
+    ReceiveJoinRoomBody,
+    ReceiveLeaveRoomBody,
+)
 from loguru import logger
-from fastapi import APIRouter, WebSocket, WebSocketDisconnect
-from pydantic import BaseModel, ValidationError
+from fastapi import APIRouter, Depends, Path, WebSocket, WebSocketDisconnect
+from websockets import ConnectionClosedError
 
 logger = logger.bind(task="ws_Rooms")
 
 router = APIRouter()
 
-
-class User:
-    def __init__(
-        self,
-        username: str,
-        user_id: uuid.UUID,
-        websocket: WebSocket,
-    ):
-        self.username = username
-        self.user_id = user_id
-        self.websocket = websocket
-
-
-class Room:
-    def __init__(self):
-        self.id: uuid.UUID = uuid.UUID(as_uuid=True)
-        self.users: Set[User] = {}
-
-    def send_json(
-        self, json_data: Dict[str, Any], exclude_user: Set[User] = {}
-    ) -> None:
-        for user in self.users:
-            if user in exclude_user:
-                continue
-            user.websocket.send_json(json_data)
-
-    def send_text(self, text_data: str, exclude_user: Set[User] = {}) -> None:
-        for user in self.users:
-            if user in exclude_user:
-                continue
-            user.websocket.send_text(text_data)
-
-    def is_there_user(self, user: User) -> bool:
-        return user in self.users
-
-    def leave_user(self, user):
-        pass
-
-
-class ConnectionManager:
-    def __init__(self):
-        self.rooms: Set[Room] = {}
-
-    def add_room(self, room: Room) -> None:
-        self.rooms.add(room)
-
-    def delete_room(self, room: Room) -> None:
-        if room in self.rooms:
-            self.rooms.discard(room)
-
-    def delete_room_by_id(self, room_id: uuid.UUID) -> None:
-        room = self.get_room_by_idI(room_id)
-        self.delete_room(room)
-
-    def get_room_by_id(self, uuid: uuid.UUID) -> Room | None:
-        for room in self.rooms:
-            if room.id == uuid:
-                return room
-        return None
-
-
-class ChatBody(BaseModel):
-    user_id: uuid.UUID
-    text: str
-    created_at: datetime
-
-
-class JoinRoomBody(BaseModel):
-    user_id: uuid.UUID
-    username: str
-    created_at: datetime
-
-
-class LeaveRoomBody(BaseModel):
-    user_id: uuid.UUID
-    created_at: datetime
-
-
-class SendMessageType(Enum):
-    CHAT = "chat"
-    JOIN_ROOM = "join_room"
-    LEAVE_ROOM = "leave_room"
-
-class SendContent(BaseModel):
-    room_id: uuid.UUID
-    type: SendMessageType
-    body: Union[ChatBody, JoinRoomBody, LeaveRoomBody]
-
-class ReceiveMessageType(Enum):
-    CHAT = "chat"
-    JOIN_ROOM = "join_room"
-    LEAVE_ROOM = "leave_room"
-
-class ReceiveContent(BaseModel):
-    type: ReceiveMessageType
-    user_id: uuid.UUID
-    room_id: uuid.UUID
-    body: Union[ChatBody, JoinRoomBody, LeaveRoomBody]
+connection_manager = ConnectionManager()
 
 
 @router.websocket(path="/{room_uuid}")
 async def rooms_ws(
     websocket: WebSocket,
+    room_uuid: Annotated[uuid.UUID, Path(title="The uuid of room.")],
+    user_model: UserModel | None = Depends(ws_with_autheticate),
+    room_dao: RoomDAO = Depends(),
 ):
-    await websocket.accept()
-    print(websocket.cookies)
+    for room in connection_manager.rooms:
+        print(room.users)
+    room_model = await room_dao.get_room(room_uuid)
+    if user_model is None or room_model is None:
+        await websocket.close()
+    else:
+        await websocket.accept()
+
+    async def join_room(data: ReceiveJoinRoomBody):
+        await connection_manager.connect(
+            data.username, websocket, user_model, room_model
+        )
+        await room_dao.add_user(room_model, user_model)
+
+    async def leave_room():
+        await connection_manager.disconnect(room_model, user_model)
+        await room_dao.leave_user(room_model, user_model)
+
     try:
         while True:
-            data = await websocket.receive_json()
-            data = ReceiveContent.model_validate_json(data, strict=True)
+            data = await websocket.receive_text()
 
-            await websocket.send_text(f"Message text was: {data}")
-    except ValidationError:
-        websocket.close(
-            status=1008,
-            reason="Invalid message format"
-        )
-    except WebSocketDisconnect:
-        print("切断しました。")
+            try:
+                data = ReceiveContent.model_validate_json(data, strict=True)
+
+                match data.type:
+                    case "join_room":
+                        data.body = ReceiveJoinRoomBody.model_validate(
+                            data.body, strict=True
+                        )
+                        await join_room(data.body)
+                    case "chat":
+                        data.body = ReceiveChatBody.model_validate(
+                            data.body, strict=True
+                        )
+                    case "leave_room":
+                        data.body = ReceiveLeaveRoomBody.model_validate(
+                            data.body, strict=True
+                        )
+                        await leave_room()
+                    case _:
+                        raise ValueError("invalid message body type.")
+            except Exception as e:
+                await websocket.send_json(
+                    {
+                        "type": "error",
+                        "detail": "Invalid message type.",
+                        "data": data,
+                    }
+                )
+
+    except WebSocketDisconnect as e:
+        # Handle WebSocketDisconnect separately if needed
+        print(f"WebSocketDisconnect: {e}")
+        await connection_manager.disconnect(room_model, user_model)
+    except ConnectionClosedError as e:
+        # ConnectionClosedError will be caught by the exception handler
+        print(f"ConnectionClosedError: {e}")

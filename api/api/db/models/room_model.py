@@ -23,9 +23,10 @@ class RoomModel(Base):
     owner_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id"))
 
     users: Mapped[List["UserModel"]] = relationship(
-        secondary="room_link_user",
-        back_populates="rooms",
+        secondary="room_link_user", back_populates="rooms", overlaps="room"
     )
     user_associations: Mapped[List[RoomLinkUser]] = relationship(
         back_populates="room",
+        overlaps="rooms",
+        viewonly=True,
     )

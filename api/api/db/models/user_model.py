@@ -22,9 +22,10 @@ class UserModel(Base):
     )
 
     rooms: Mapped[List["RoomModel"]] = relationship(
-        secondary="room_link_user",
-        back_populates="users",
+        secondary="room_link_user", back_populates="users", overlaps="user"
     )
     room_associations: Mapped[List[RoomLinkUser]] = relationship(
         back_populates="user",
+        overlaps="users",
+        viewonly=True,
     )

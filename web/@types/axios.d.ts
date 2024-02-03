@@ -6,3 +6,8 @@ export type CredentialsType = {
   refresh_token: RefreshTokenType,
 };
 
+export type RoomUserType = {
+  id: string,
+  created_at: Moment,
+  updated_at: Moment,
+}

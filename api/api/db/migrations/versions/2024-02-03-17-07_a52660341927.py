@@ -1,15 +1,15 @@
-"""Add Rooms, User, RoomLinkUser Table
+"""add tables
 
-Revision ID: 25615d348393
+Revision ID: a52660341927
 Revises: 
-Create Date: 2024-02-02 06:45:34.408905
+Create Date: 2024-02-03 17:07:40.830802
 
 """
 import sqlalchemy as sa
 from alembic import op
 
 # revision identifiers, used by Alembic.
-revision = "25615d348393"
+revision = "a52660341927"
 down_revision = None
 branch_labels = None
 depends_on = None

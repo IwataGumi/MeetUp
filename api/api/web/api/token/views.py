@@ -18,7 +18,6 @@ async def generate_token(
     refresh_token: str = Cookie(default=None),
     user_dao: UserDAO = Depends(),
 ) -> Response:
-    print(refresh_token)
     if refresh_token is None and token_dto.refresh_token is None:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
