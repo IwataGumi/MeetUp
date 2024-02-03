@@ -4,6 +4,7 @@ from datetime import datetime
 from api.schemas.user import UserInfo
 from pydantic import BaseModel, ConfigDict
 
+
 class RoomInfo(BaseModel):
     """DTO for Room model."""
 

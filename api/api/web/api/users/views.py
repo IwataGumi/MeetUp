@@ -9,7 +9,8 @@ from fastapi.responses import JSONResponse
 
 router = APIRouter()
 
-@router.post('/')
+
+@router.post("/")
 async def create_user(
     user_dao: UserDAO = Depends(),
 ) -> Response:
@@ -18,10 +19,12 @@ async def create_user(
     access_token = user_dao.generate_access_token(new_user)
     refresh_token = user_dao.generate_refresh_token(new_user)
 
-    response = JSONResponse({
-        "access_token": access_token,
-        "refresh_token": refresh_token,
-    })
+    response = JSONResponse(
+        {
+            "access_token": access_token,
+            "refresh_token": refresh_token,
+        }
+    )
     response.set_cookie(
         key="access_token",
         value=access_token,
@@ -43,7 +46,8 @@ async def create_user(
 
     return response
 
-@router.get('/me', response_model=UserInfo)
+
+@router.get("/me", response_model=UserInfo)
 def users_me(
     user: UserModel = Depends(with_authenticate),
 ) -> Response:

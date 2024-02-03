@@ -34,7 +34,6 @@ const SelfCamera = ({ width, height, withControlls, className }: Props) => {
 
   const requestMediaStream = useCallback(async () => {
     if (!navigator.mediaDevices.getUserMedia || !videoRef.current) return;
-
     try {
       const mediaStream = await navigator.mediaDevices.getUserMedia(videoConstraints);
       setOriginStream(mediaStream);
@@ -44,6 +43,7 @@ const SelfCamera = ({ width, height, withControlls, className }: Props) => {
       videoRef.current.srcObject = screenStream;
       setScreenStream(screenStream);
     } catch (e) {
+      console.log(e)
       setIsRejected(false);
     }
   }, [setLocalStream, setOriginStream, setScreenStream]);

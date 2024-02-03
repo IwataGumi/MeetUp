@@ -12,6 +12,7 @@ from api.db.base import Base
 if TYPE_CHECKING:
     from api.db.models.user_model import UserModel
 
+
 class RoomModel(Base):
 
     __tablename__ = "rooms"
@@ -19,12 +20,12 @@ class RoomModel(Base):
     id: Mapped[UUID] = mapped_column(
         UUID(as_uuid=True), unique=True, primary_key=True, default=uuid.uuid4
     )
-    owner_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey('users.id'))
+    owner_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id"))
 
-    users: Mapped[List["UserModel"]] =  relationship(
+    users: Mapped[List["UserModel"]] = relationship(
         secondary="room_link_user",
         back_populates="rooms",
     )
     user_associations: Mapped[List[RoomLinkUser]] = relationship(
-        back_populates='room',
+        back_populates="room",
     )

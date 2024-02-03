@@ -11,6 +11,7 @@ TEMP_DIR = Path(gettempdir())
 
 EnvironmentType = Literal["dev", "prod"]
 
+
 class LogLevel(str, enum.Enum):  # noqa: WPS600
     """Possible log levels."""
 
@@ -29,7 +30,8 @@ class Settings(BaseSettings):
     These parameters can be configured
     with environment variables.
     """
-    domain: str = 'localhost'
+
+    domain: str = "localhost"
     host: str = "127.0.0.1"
     port: int = 8000
     web_uri: str = "http://localhost:3000/"
@@ -67,8 +69,7 @@ class Settings(BaseSettings):
 
     @property
     def is_production(self) -> bool:
-        return self.environment != 'dev'
-
+        return self.environment != "dev"
 
     @property
     def db_url(self) -> URL:

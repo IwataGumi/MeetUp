@@ -11,6 +11,7 @@ from api.libs import jwt_token
 router = APIRouter()
 logger = logger.bind(Task="Token")
 
+
 @router.post("/token/refresh")
 async def generate_token(
     token_dto: JWTRefreshToken,
@@ -24,7 +25,7 @@ async def generate_token(
             detail="Not found refresh_token in the request. (Header and Cookie)",
         )
 
-    token = ''
+    token = ""
 
     if refresh_token is not None:
         token = refresh_token
@@ -37,26 +38,26 @@ async def generate_token(
         if user_info is None:
             # NORMALY NO WAY!
             error_message = [
-                'Failed to decode valid refresh_token.',
-                pformat(user_info)
+                "Failed to decode valid refresh_token.",
+                pformat(user_info),
             ]
             logger.critical("\n".join(error_message))
             raise HTTPException(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail="Internal Server Error."
+                detail="Internal Server Error.",
             )
 
         user = await user_dao.get_user(user_info["user_id"])
 
         if user is None:
             error_message = [
-                'Not found user to generate new access_token.',
+                "Not found user to generate new access_token.",
                 pformat(user_info),
             ]
             logger.critical("\n".join(error_message))
             raise HTTPException(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail="Internal Server Error."
+                detail="Internal Server Error.",
             )
 
         new_access_token = user_dao.generate_access_token(user)
@@ -68,7 +69,7 @@ async def generate_token(
             secure=settings.is_production,
             domain=settings.domain,
             samesite="strict",
-            httponly=True
+            httponly=True,
         )
 
         return response

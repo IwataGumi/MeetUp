@@ -19,13 +19,13 @@ const Join = () => {
       setUserProfile({...userProfile, username: userName})
     }
 
-    router.push(`/room/${router.query.id}`)
+    router.push(`/room/${router.query.roomId}`)
   }
 
   useEffect(() => {
-    if (router.query.id == undefined) return
+    if (router.query.roomId == undefined) return
 
-    axios.get(`/api/rooms/${router.query.id}`)
+    axios.get(`/api/rooms/${router.query.roomId}`)
       .catch((error) => {
         if (error.response) {
           switch (error.response.status) {
@@ -38,7 +38,7 @@ const Join = () => {
           }
         }
       })
-  }, [router, router.query.id]);
+  }, [router, router.isReady, router.query.roomId]);
 
   return (
     <div className='flex flex-col justify-center items-center'>

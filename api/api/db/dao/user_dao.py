@@ -39,10 +39,7 @@ class UserDAO:
 
     def generate_access_token(self, user_model: UserModel) -> str:
         return encode_token(
-            data={
-                "token_type": "token",
-                "user_id": str(user_model.id)
-            },
+            data={"token_type": "token", "user_id": str(user_model.id)},
             expires_delta=static.ACCESS_TOKEN_EXPIRE_TIME,
         )
 

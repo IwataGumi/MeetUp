@@ -5,6 +5,7 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 from api.db.meta import meta
 
+
 class Base(DeclarativeBase):
     """Base for all models."""
 

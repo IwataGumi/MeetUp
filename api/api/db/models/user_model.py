@@ -12,6 +12,7 @@ from api.db.base import Base
 if TYPE_CHECKING:
     from api.db.models.room_model import RoomModel
 
+
 class UserModel(Base):
 
     __tablename__ = "users"
@@ -25,5 +26,5 @@ class UserModel(Base):
         back_populates="users",
     )
     room_associations: Mapped[List[RoomLinkUser]] = relationship(
-        back_populates='user',
+        back_populates="user",
     )
