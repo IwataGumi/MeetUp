@@ -2,8 +2,6 @@ from typing import Awaitable, Callable
 
 from fastapi import FastAPI
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
-
-from api.services.rabbit.lifetime import init_rabbit, shutdown_rabbit
 from api.settings import settings
 
 
@@ -43,7 +41,6 @@ def register_startup_event(
     async def _startup() -> None:  # noqa: WPS430
         app.middleware_stack = None
         _setup_db(app)
-        init_rabbit(app)
         app.middleware_stack = app.build_middleware_stack()
         pass  # noqa: WPS420
 
@@ -63,8 +60,6 @@ def register_shutdown_event(
     @app.on_event("shutdown")
     async def _shutdown() -> None:  # noqa: WPS430
         await app.state.db_engine.dispose()
-
-        await shutdown_rabbit(app)
         pass  # noqa: WPS420
 
     return _shutdown
