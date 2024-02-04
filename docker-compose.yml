@@ -3,7 +3,9 @@ version: "3"
 services:
   api:
     container_name: api
-    build: ./.docker/api
+    build:
+      context: .
+      dockerfile: ./.docker/api
     image: api:${API_VERSION:-latest}
     ports:
       - 8000:8000
@@ -26,7 +28,9 @@ services:
 
   web:
     container_name: web
-    build: ./.docker/web
+    build:
+      context: .
+      dockerfile: ./.docker/web
     ports:
       - 3000:3000
     volumes:
