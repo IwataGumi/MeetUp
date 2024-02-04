@@ -13,7 +13,7 @@ RUN poetry config virtualenvs.in-project true
 ENV PYTHONDONTWRITEBYTECODE 1
 
 # # Copying requirements of a project
-COPY pyproject.toml poetry.lock /app/
+COPY ../../api/pyproject.toml ../../api/poetry.lock /app/
 WORKDIR /app
 
 # Installing requirements
@@ -24,7 +24,7 @@ RUN apt-get purge -y \
   && rm -rf /var/lib/apt/lists/*
 
 # Copying actuall application
-COPY . /app
+COPY ../../api/ /app
 
 RUN poetry install
 

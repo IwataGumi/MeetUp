@@ -1,7 +1,7 @@
 FROM node:18.17.1-alpine
 
 WORKDIR /app
-COPY . /app
+COPY ../../web /app
 
 RUN yarn install --frozen-lockfile
 

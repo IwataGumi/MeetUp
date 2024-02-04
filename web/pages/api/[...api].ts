@@ -9,12 +9,14 @@ const proxy: httpProxy = httpProxy.createProxyServer()
 export const config = {
   api: {
     bodyParser: false,
+    railingSlash: true,
   },
 }
 
 export default (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   return new Promise((resolve, reject) => {
-    proxy.web(req, res, { target: API_URL, changeOrigin: true }, (err) => {
+    console.log(req.url)
+    proxy.web(req, res, { target: API_URL　}, (err) => {
       if (err) {
         return reject(err)
       }

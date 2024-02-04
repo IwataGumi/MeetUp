@@ -19,9 +19,8 @@ const Join = () => {
       setProfileUser({...userProfile, username: userName})
     }
 
-    await axios
-      .post(`/api/rooms/${router.query.roomId}/users/`)
-      .then(() => router.push(`/room/${router.query.roomId}`))
+    await axios.post(`/api/rooms/${router.query.roomId}/users/?`)
+      .then(() => router.push(`/room/${router.query.roomId}/?`))
       .catch((error) => {
         console.log(error)
       })

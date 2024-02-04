@@ -61,7 +61,7 @@ const Home = () => {
   }
 
   const createRoom = async () => {
-    await axios.post(`/api/rooms/`)
+    await axios.post(`/api/rooms`)
       .then((res) => {
         router.push(`/join/${res.data.id}`);
       }).catch((_e) => {
