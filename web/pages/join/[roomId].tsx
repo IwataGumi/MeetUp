@@ -1,37 +1,35 @@
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { userState } from '@/atoms/userState';
+import { userProfileState } from '@/atoms/userProfileState';
 import SelfCamera from '@/components/Camera/SelfCamera';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import toast from 'react-hot-toast';
 import axios from 'axios';
 
 const Join = () => {
   const router = useRouter();
-  const [user, setUser] = useRecoilState(userState);
-  const [userName, setUserName] = useState(user.username || '');
+  const [userProfile, setProfileUser] = useRecoilState(userProfileState);
+  const [userName, setUserName] = useState(userProfile.username || '');
 
   const joinRoom = async () => {
     if (userName === '' || userName.length > 20) {
       setUserName('ゲスト')
-      setUser({...user, username: 'ゲスト'})
+      setProfileUser({...userProfile, username: 'ゲスト'})
     } else {
-      setUser({...user, username: userName})
+      setProfileUser({...userProfile, username: userName})
     }
 
-    await axios
-      .post(`/rooms/${router.query.id}/users/`)
-      .then(() => router.push(`/room/${router.query.id}`))
+    await axios.post(`/api/rooms/${router.query.roomId}/users/?`)
+      .then(() => router.push(`/room/${router.query.roomId}/?`))
       .catch((error) => {
         console.log(error)
       })
   }
 
   useEffect(() => {
-    if (router.query.id == undefined) return
+    if (router.query.roomId == undefined) return
 
-    axios.get(`/api/rooms/${router.query.id}`)
+    axios.get(`/api/rooms/${router.query.roomId}`)
       .catch((error) => {
         if (error.response) {
           switch (error.response.status) {
@@ -45,7 +43,7 @@ const Join = () => {
           }
         }
       })
-  }, [router, router.query.id]);
+  }, [router, router.query.roomId]);
 
   return (
     <div className='flex flex-col justify-center items-center'>

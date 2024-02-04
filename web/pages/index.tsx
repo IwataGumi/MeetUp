@@ -4,7 +4,6 @@ import toast from 'react-hot-toast';
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useForm } from 'react-hook-form';
-import { useEffect } from 'react';
 
 const Home = () => {
   const router = useRouter();
@@ -61,6 +60,15 @@ const Home = () => {
       })
   }
 
+  const createRoom = async () => {
+    await axios.post(`/api/rooms`)
+      .then((res) => {
+        router.push(`/join/${res.data.id}`);
+      }).catch((_e) => {
+        toast.error('想定外のエラーが発生しました。');
+      })
+  }
+
   return (
     <div className='hero h-full min-h-screen'>
       <div className="hero-content text-center m-auto w-full max-w-xs">
@@ -83,7 +91,13 @@ const Home = () => {
           <div className="dropdown w-full">
             <button tabIndex={0} className="btn btn-neutral w-full mt-2">ルーム作成</button>
             <ul tabIndex={0} className="dropdown-content z-[1] menu mt-1 p-2 shadow rounded-box w-52">
-              <li><button>今すぐ作成をする</button></li>
+              <li>
+                <button
+                  onClick={createRoom}
+                >
+                  今すぐ作成をする
+                </button>
+              </li>
               {/* TODO: 予約機能の作成 */}
               {/* <li><button>予約する</button></li> */}
             </ul>

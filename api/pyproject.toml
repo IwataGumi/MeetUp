@@ -24,7 +24,6 @@ alembic = "^1.11.1"
 asyncpg = {version = "^0.28.0", extras = ["sa"]}
 aiofiles = "^23.1.0"
 httptools = "^0.6.0"
-aio-pika = "^9.1.4"
 loguru = "^0.7.0"
 python-jose = "^3.3.0"
 

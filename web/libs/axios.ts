@@ -9,7 +9,7 @@ const axios = Axios.create({
 
 let isRefreshing = false;
 let refreshPromise: Promise<unknown> | null = null;
-const reidrectPage = '/'
+const reidrectPage = '/';
 
 const refreshAccessToken = async () => {
   if (!isRefreshing) {
