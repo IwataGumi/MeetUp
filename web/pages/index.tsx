@@ -4,7 +4,6 @@ import toast from 'react-hot-toast';
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useForm } from 'react-hook-form';
-import { useEffect } from 'react';
 
 const Home = () => {
   const router = useRouter();
@@ -59,6 +58,9 @@ const Home = () => {
           }
         }
       })
+  }
+
+  const createRoom = async () => {
   }
 
   return (

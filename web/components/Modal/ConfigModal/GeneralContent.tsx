@@ -1,17 +1,17 @@
-import { userState } from "@/atoms/userState";
+import { userProfileState } from "@/atoms/userProfileState";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
 
 const GeneralContent = () => {
-  const [user, setUser] = useRecoilState(userState);
-  const [userName, setUserName] = useState(user.username || '');
+  const [userProfile, setProfileUser] = useRecoilState(userProfileState);
+  const [userName, setUserName] = useState(userProfile.username || '');
 
   const onBlur = () => {
     if (userName === '' || userName.length > 20) {
-      return setUser({...user, username: 'ゲスト'})
+      return setProfileUser({...userProfile, username: 'ゲスト'})
     }
 
-    setUser({...user, username: userName})
+    setProfileUser({...userProfile, username: userName})
   };
 
 
