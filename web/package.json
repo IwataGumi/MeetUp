@@ -12,6 +12,7 @@
     "@hookform/resolvers": "^3.3.4",
     "@tailwindcss/typography": "^0.5.10",
     "axios": "^1.6.7",
+    "http-proxy": "^1.18.1",
     "next": "14.0.3",
     "next-themes": "^0.2.1",
     "react": "^18",

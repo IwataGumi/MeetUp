@@ -4,7 +4,6 @@ import { userProfileState } from '@/atoms/userProfileState';
 import SelfCamera from '@/components/Camera/SelfCamera';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import toast from 'react-hot-toast';
 import axios from 'axios';
 
 const Join = () => {
@@ -21,7 +20,7 @@ const Join = () => {
     }
 
     await axios
-      .post(`/rooms/${router.query.roomId}/users/`)
+      .post(`/api/rooms/${router.query.roomId}/users/`)
       .then(() => router.push(`/room/${router.query.roomId}`))
       .catch((error) => {
         console.log(error)

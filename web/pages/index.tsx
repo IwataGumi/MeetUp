@@ -61,6 +61,12 @@ const Home = () => {
   }
 
   const createRoom = async () => {
+    await axios.post(`/api/rooms/`)
+      .then((res) => {
+        router.push(`/join/${res.data.id}`);
+      }).catch((_e) => {
+        toast.error('想定外のエラーが発生しました。');
+      })
   }
 
   return (
@@ -85,7 +91,13 @@ const Home = () => {
           <div className="dropdown w-full">
             <button tabIndex={0} className="btn btn-neutral w-full mt-2">ルーム作成</button>
             <ul tabIndex={0} className="dropdown-content z-[1] menu mt-1 p-2 shadow rounded-box w-52">
-              <li><button>今すぐ作成をする</button></li>
+              <li>
+                <button
+                  onClick={createRoom}
+                >
+                  今すぐ作成をする
+                </button>
+              </li>
               {/* TODO: 予約機能の作成 */}
               {/* <li><button>予約する</button></li> */}
             </ul>

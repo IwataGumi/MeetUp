@@ -6,9 +6,11 @@ import ConfigModal from "@/components/Modal/ConfigModal";
 import ChatModal from "@/components/Modal/ChatModal";
 import ChatButton from "@/components/Camera/Controlls/ChatButton";
 import { useRef } from "react";
+import { useRouter } from "next/router";
 
 
 const VideoControlls = () => {
+  const router = useRouter();
   const buttonClassName = 'mx-1 mb-2'
   const buttonSizeClassName = 'h-[3rem] w-[3rem] min-h-[3rem]'
   const controllButtonSize = 24
@@ -44,11 +46,12 @@ const VideoControlls = () => {
         iconSize={controllButtonSize}
         buttonSizeClassName={buttonSizeClassName}
         className={buttonClassName}
+        onClick={() => router.push('/')}
       />
       <ChatModal ref={chatModalRef} />
       <ConfigModal ref={configModalRef} />
     </div>
-  )    
+  )
 }
 
 export default VideoControlls;
