@@ -54,7 +54,7 @@ def get_app() -> FastAPI:
     # Adds static directory.
     # This directory is used to access swagger files.
     app.mount(
-        "/static",
+        "/api/static",
         StaticFiles(directory=APP_ROOT / "static"),
         name="static",
     )
