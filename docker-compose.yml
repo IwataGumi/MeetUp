@@ -3,13 +3,11 @@ version: "3"
 services:
   api:
     container_name: api
+    image: api:${API_VERSION:-latest}
+    restart: always
     build:
       context: .
       dockerfile: ./.docker/api/Dockerfile
-    image: api:${API_VERSION:-latest}
-    ports:
-      - 8000:8000
-    restart: always
     depends_on:
       db:
         condition: service_healthy
@@ -31,8 +29,6 @@ services:
     build:
       context: .
       dockerfile: ./.docker/web/Dockerfile
-    ports:
-      - 3000:3000
     volumes:
       - ./web:/app
       - next_build:/app/.next
@@ -48,8 +44,6 @@ services:
   db:
     container_name: database
     image: postgres:16-bullseye
-    ports:
-      - 5432:5432
     environment:
       POSTGRES_USER: postgres_user
       POSTGRES_PASSWORD: postgres_password
@@ -81,6 +75,17 @@ services:
       api:
         condition: service_started
 
+  nginx:
+      volumes:
+      - ./.docker/nginx/conf:/etc/nginx/conf.d
+      - ./.docker/nginx/log:/var/log/nginx
+      build:
+        context: .
+        dockerfile: ./.docker/nginx/Dockerfile
+
+      restart: always
+      ports:
+      - "80:80"
 volumes:
   venv:
   next_build:
